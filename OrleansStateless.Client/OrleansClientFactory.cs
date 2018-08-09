@@ -21,9 +21,11 @@ namespace OrleansStateless.Client
                 options.ClusterId = "development";
             });
 
-            builder.UseAzureStorageClustering(options => options.ConnectionString = azureStorageConnectionString);
+            builder.UseAzureStorageClustering(options =>
+                options.ConnectionString = azureStorageConnectionString);
 
-            builder.ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IMyFirstGrain).Assembly));
+            builder.ConfigureApplicationParts(parts =>
+                parts.AddApplicationPart(typeof(IMyFirstGrain).Assembly));
 
             builder.ConfigureLogging(logging => logging.AddDebug());
 
