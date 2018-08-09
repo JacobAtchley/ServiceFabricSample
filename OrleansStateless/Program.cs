@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-namespace OrleansStateless
+namespace MyStatelessService
 {
     internal static class Program
     {
@@ -19,10 +19,10 @@ namespace OrleansStateless
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
 
-                ServiceRuntime.RegisterServiceAsync("OrleansStatelessType",
-                    context => new OrleansStateless(context)).GetAwaiter().GetResult();
+                ServiceRuntime.RegisterServiceAsync("MyStatelessServiceType",
+                    context => new MyStatelessService(context)).GetAwaiter().GetResult();
 
-                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(OrleansStateless).Name);
+                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(MyStatelessService).Name);
 
                 // Prevents this host process from terminating so services keep running.
                 Thread.Sleep(Timeout.Infinite);

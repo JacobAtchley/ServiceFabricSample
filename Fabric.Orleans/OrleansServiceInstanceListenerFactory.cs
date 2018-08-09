@@ -1,13 +1,13 @@
-﻿using Grains.Implementations;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using Orleans.Hosting.ServiceFabric;
 using System.Fabric;
+using Grains.Implementations;
 
-namespace OrleansStateless
+namespace Fabric.Orleans
 {
     public static class OrleansServiceInstanceListenerFactory
     {

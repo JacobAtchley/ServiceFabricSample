@@ -2,9 +2,9 @@
 using System.Diagnostics.Tracing;
 using System.Fabric;
 
-namespace OrleansStateless
+namespace MyStatelessService
 {
-    [EventSource(Name = "MyCompany-ServiceFabricSample-OrleansStateless")]
+    [EventSource(Name = "MyCompany-ServiceFabricSample-MyStatelessService")]
     internal sealed class ServiceEventSource : EventSource
     {
         public static readonly ServiceEventSource Current = new ServiceEventSource();

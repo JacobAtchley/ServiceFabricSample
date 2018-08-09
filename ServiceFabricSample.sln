@@ -5,15 +5,21 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ServiceFabricSample", "ServiceFabricSample\ServiceFabricSample.sfproj", "{C493BB90-31B1-44B3-8074-67DFE370468F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansStateless", "OrleansStateless\OrleansStateless.csproj", "{3DFC83CD-9F0C-4A6C-B4E2-E4CD8F8C1332}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyStatelessService", "OrleansStateless\MyStatelessService.csproj", "{3DFC83CD-9F0C-4A6C-B4E2-E4CD8F8C1332}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orleans", "Orleans", "{DFBEB1DB-C2FD-485B-B5C7-2C4EC04464E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grains.Interfaces", "Grains.Interfaces\Grains.Interfaces.csproj", "{38D76BB1-B3BC-4F57-8055-9A9E1CE3FABE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains.Interfaces", "Grains.Interfaces\Grains.Interfaces.csproj", "{38D76BB1-B3BC-4F57-8055-9A9E1CE3FABE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grains.Implementations", "Grains.Implementations\Grains.Implementations.csproj", "{3A5FD1A6-D7FF-4E8F-8FF9-51FFD3526A8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains.Implementations", "Grains.Implementations\Grains.Implementations.csproj", "{3A5FD1A6-D7FF-4E8F-8FF9-51FFD3526A8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrleansStateless.Client", "OrleansStateless.Client\OrleansStateless.Client.csproj", "{B31CE009-7080-40A6-B67C-8C6B1DBB68D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansStateless.Client", "OrleansStateless.Client\OrleansStateless.Client.csproj", "{B31CE009-7080-40A6-B67C-8C6B1DBB68D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fabric", "Fabric", "{2A5B25C0-1772-4915-AD1A-ABE26A5B6DC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric.Orleans", "Fabric.Orleans\Fabric.Orleans.csproj", "{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric.Web", "Fabric.Web\Fabric.Web.csproj", "{89245D4E-D1DC-4971-B59B-67859689C1CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +69,22 @@ Global
 		{B31CE009-7080-40A6-B67C-8C6B1DBB68D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B31CE009-7080-40A6-B67C-8C6B1DBB68D3}.Release|x64.ActiveCfg = Release|Any CPU
 		{B31CE009-7080-40A6-B67C-8C6B1DBB68D3}.Release|x64.Build.0 = Release|Any CPU
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}.Debug|x64.Build.0 = Debug|Any CPU
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}.Release|x64.ActiveCfg = Release|Any CPU
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}.Release|x64.Build.0 = Release|Any CPU
+		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Debug|x64.Build.0 = Debug|Any CPU
+		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Release|x64.ActiveCfg = Release|Any CPU
+		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +92,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{38D76BB1-B3BC-4F57-8055-9A9E1CE3FABE} = {DFBEB1DB-C2FD-485B-B5C7-2C4EC04464E8}
 		{3A5FD1A6-D7FF-4E8F-8FF9-51FFD3526A8E} = {DFBEB1DB-C2FD-485B-B5C7-2C4EC04464E8}
+		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99} = {2A5B25C0-1772-4915-AD1A-ABE26A5B6DC7}
+		{89245D4E-D1DC-4971-B59B-67859689C1CC} = {2A5B25C0-1772-4915-AD1A-ABE26A5B6DC7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A961A39D-491D-4398-A6CD-6B94F794ECC2}

@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
+using Fabric.Orleans;
 
-namespace OrleansStateless
+namespace MyStatelessService
 {
-    internal sealed class OrleansStateless : StatelessService
+    internal sealed class MyStatelessService : StatelessService
     {
-        public OrleansStateless(StatelessServiceContext context)
+        public MyStatelessService(StatelessServiceContext context)
             : base(context)
         {
 

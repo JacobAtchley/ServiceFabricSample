@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace OrleansStateless.Client
+namespace MyStatelessService.Client
 {
     class Program
     {
@@ -16,7 +16,7 @@ namespace OrleansStateless.Client
             Console.WriteLine("Starting....");
 
             var client = OrleansClientFactory.Get(
-                "fabric:/ServiceFabricSample/OrleansStateless",
+                "fabric:/ServiceFabricSample/MyStatelessService",
                 "UseDevelopmentStorage=true");
 
             Console.WriteLine("Connecting....");

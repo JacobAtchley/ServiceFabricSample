@@ -5,7 +5,7 @@ using Orleans.Configuration;
 using Orleans.Hosting;
 using System;
 
-namespace OrleansStateless.Client
+namespace MyStatelessService.Client
 {
     public static class OrleansClientFactory
     {
