@@ -1,11 +1,12 @@
-﻿using Microsoft.ServiceFabric.Services.Communication.Runtime;
+﻿using Fabric.Orleans;
+using Fabric.Web;
+using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
-using Fabric.Orleans;
 
 namespace MyStatelessService
 {
@@ -21,7 +22,10 @@ namespace MyStatelessService
         {
             return new[]
             {
-                OrleansServiceInstanceListenerFactory.Get()
+                OrleansServiceInstanceListenerFactory.Get(),
+
+                WebClientFactory.Get("Web", (context, log) =>
+                    ServiceEventSource.Current.ServiceMessage(context, log))
             };
         }
 

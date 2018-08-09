@@ -1,8 +1,9 @@
 ﻿using Grains.Interfaces;
 using System;
 using System.Threading.Tasks;
+using Orleans.Client;
 
-namespace MyStatelessService.Client
+namespace OrleansStateless.Client
 {
     class Program
     {

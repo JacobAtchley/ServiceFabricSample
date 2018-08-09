@@ -1,11 +1,10 @@
-﻿using Grains.Interfaces;
+﻿using System;
+using Grains.Interfaces;
 using Microsoft.Extensions.Logging;
-using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
-using System;
 
-namespace MyStatelessService.Client
+namespace Orleans.Client
 {
     public static class OrleansClientFactory
     {

@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric.Orleans", "Fabric.Or
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric.Web", "Fabric.Web\Fabric.Web.csproj", "{89245D4E-D1DC-4971-B59B-67859689C1CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orleans.Client", "Orleans.Client\Orleans.Client.csproj", "{CD0550D2-156A-439E-B17F-36E91EE00452}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,14 @@ Global
 		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Release|x64.ActiveCfg = Release|Any CPU
 		{89245D4E-D1DC-4971-B59B-67859689C1CC}.Release|x64.Build.0 = Release|Any CPU
+		{CD0550D2-156A-439E-B17F-36E91EE00452}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD0550D2-156A-439E-B17F-36E91EE00452}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD0550D2-156A-439E-B17F-36E91EE00452}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CD0550D2-156A-439E-B17F-36E91EE00452}.Debug|x64.Build.0 = Debug|Any CPU
+		{CD0550D2-156A-439E-B17F-36E91EE00452}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD0550D2-156A-439E-B17F-36E91EE00452}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD0550D2-156A-439E-B17F-36E91EE00452}.Release|x64.ActiveCfg = Release|Any CPU
+		{CD0550D2-156A-439E-B17F-36E91EE00452}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +104,7 @@ Global
 		{3A5FD1A6-D7FF-4E8F-8FF9-51FFD3526A8E} = {DFBEB1DB-C2FD-485B-B5C7-2C4EC04464E8}
 		{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99} = {2A5B25C0-1772-4915-AD1A-ABE26A5B6DC7}
 		{89245D4E-D1DC-4971-B59B-67859689C1CC} = {2A5B25C0-1772-4915-AD1A-ABE26A5B6DC7}
+		{CD0550D2-156A-439E-B17F-36E91EE00452} = {DFBEB1DB-C2FD-485B-B5C7-2C4EC04464E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A961A39D-491D-4398-A6CD-6B94F794ECC2}

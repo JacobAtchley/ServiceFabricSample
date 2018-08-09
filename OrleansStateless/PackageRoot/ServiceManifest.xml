@@ -31,6 +31,7 @@
       <Endpoint Name="ServiceEndpoint" />
       <Endpoint Name="OrleansSiloEndpoint" Protocol="tcp"/>
       <Endpoint Name="OrleansProxyEndpoint" Protocol="tcp"/>
+      <Endpoint Protocol="http" Name="Web" Type="Input" Port="8080" />
     </Endpoints>
   </Resources>
 </ServiceManifest>
