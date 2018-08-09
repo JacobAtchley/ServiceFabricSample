@@ -1,0 +1,9 @@
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\bin\Debug\netcoreapp2.1\OrleansStateless.Client.deps.json
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\bin\Debug\netcoreapp2.1\OrleansStateless.Client.runtimeconfig.json
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\bin\Debug\netcoreapp2.1\OrleansStateless.Client.runtimeconfig.dev.json
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\bin\Debug\netcoreapp2.1\OrleansStateless.Client.dll
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\bin\Debug\netcoreapp2.1\OrleansStateless.Client.pdb
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\bin\Debug\netcoreapp2.1\Grains.Interfaces.dll
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\bin\Debug\netcoreapp2.1\Grains.Interfaces.pdb
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\obj\Debug\netcoreapp2.1\codegen\OrleansStateless.Client.csproj.CoreCompileInputs.cache
+C:\jacob\git\ServiceFabricSample\OrleansStateless.Client\obj\Debug\netcoreapp2.1\codegen\OrleansStateless.Client.AssemblyInfoInputs.cache

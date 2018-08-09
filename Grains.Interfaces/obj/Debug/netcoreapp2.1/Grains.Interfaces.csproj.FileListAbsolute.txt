@@ -1,0 +1,6 @@
+C:\jacob\git\ServiceFabricSample\Grains.Interfaces\bin\Debug\netcoreapp2.1\Grains.Interfaces.deps.json
+C:\jacob\git\ServiceFabricSample\Grains.Interfaces\bin\Debug\netcoreapp2.1\Grains.Interfaces.dll
+C:\jacob\git\ServiceFabricSample\Grains.Interfaces\obj\Debug\netcoreapp2.1\Grains.Interfaces.csprojAssemblyReference.cache
+C:\jacob\git\ServiceFabricSample\Grains.Interfaces\obj\Debug\netcoreapp2.1\Grains.Interfaces.csproj.CoreCompileInputs.cache
+C:\jacob\git\ServiceFabricSample\Grains.Interfaces\obj\Debug\netcoreapp2.1\Grains.Interfaces.AssemblyInfoInputs.cache
+C:\jacob\git\ServiceFabricSample\Grains.Interfaces\obj\Debug\netcoreapp2.1\Grains.Interfaces.AssemblyInfo.cs
