@@ -18,7 +18,7 @@ namespace OrleansStateless
 
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
-            return new ServiceInstanceListener[]
+            return new[]
             {
                 OrleansServiceInstanceListenerFactory.Get()
             };

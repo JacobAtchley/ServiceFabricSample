@@ -15,7 +15,9 @@ namespace OrleansStateless.Client
         {
             Console.WriteLine("Starting....");
 
-            var client = OrleansClientFactory.Get();
+            var client = OrleansClientFactory.Get(
+                "fabric:/ServiceFabricSample/OrleansStateless",
+                "UseDevelopmentStorage=true");
 
             Console.WriteLine("Connecting....");
 
