@@ -1,10 +1,12 @@
 ﻿using Fabric.Orleans;
 using Fabric.Web;
+using Fabric.Web.Models;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Fabric;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,8 +26,12 @@ namespace MyStatelessService
             {
                 OrleansServiceInstanceListenerFactory.Get(),
 
-                WebClientFactory.Get("Web", (context, log) =>
-                    ServiceEventSource.Current.ServiceMessage(context, log))
+                WebClientFactory.Get(new WebClientFactoryOptions
+                {
+                    ContentDirectory = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web",
+                    EndpointName = "Web",
+                    LogAction = (ctx, log) => ServiceEventSource.Current.ServiceMessage(ctx, log)
+                })
             };
         }
 

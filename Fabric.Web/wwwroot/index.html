@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>My Stateless Service Fabric Web App</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+</head>
+<body>
+<div id="app">
+    <md-button class="md-primary md-raised" @click="checkIt">Check It!</md-button>
+<div>
+    <md-table>
+        <md-table-row>
+            <md-table-head md-numeric>Count</md-table-head>
+            <md-table-head>Message</md-table-head>
+        </md-table-row>
+        <md-table-row v-for="(call, index) in calls" :key="index">
+            <md-table-cell>
+                {{index}}
+            </md-table-cell>
+            <md-table-cell>
+                {{call}}
+            </md-table-cell>
+        </md-table-row>
+    </md-table>
+    </div>
+</div>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/vue-material@beta"></script>
+<script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    Vue.use(VueMaterial.default);
+
+    var App = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                calls: []
+            }
+        },
+        methods: {
+            checkIt: function() {
+                var vm = this;
+
+                axios.get('/api/test/orleans')
+                    .then(function(x) {
+                        vm.calls.push(x.data);
+                    });
+            }
+        }
+    });
+</script>
+</body>
+</html>

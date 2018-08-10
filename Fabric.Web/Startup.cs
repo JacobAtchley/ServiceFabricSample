@@ -10,12 +10,13 @@ namespace Fabric.Web
     {
         public Startup(IHostingEnvironment env)
         {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
-            this.Configuration = builder.Build();
+
+            Configuration = builder.Build();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -28,29 +29,28 @@ namespace Fabric.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"))
+                .AddDebug();
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage()
+                    .UseBrowserLink();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-
-            app.UseMvc(
-                routes =>
+            app.UseDefaultFiles()
+                .UseStaticFiles()
+                .UseMvc(routes =>
                 {
-                    routes.MapRoute(
-                        name: "default",
-                        template: "{controller=Home}/{action=Index}/{id?}");
+                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 });
         }
     }

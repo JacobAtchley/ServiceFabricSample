@@ -1,40 +1,34 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Fabric.Web.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using System;
 using System.Fabric;
-using System.IO;
 using System.Net.Http;
 
 namespace Fabric.Web
 {
     public static class WebClientFactory
     {
-        public static ServiceInstanceListener Get(string endpointName, Action<StatelessServiceContext, string> logAction)
+        public static ServiceInstanceListener Get(WebClientFactoryOptions options)
         {
-            return new ServiceInstanceListener(x => CreateCommunicationListener(x, logAction, endpointName));
-        }
-
-        private static ICommunicationListener CreateCommunicationListener(StatelessServiceContext serviceContext,
-            Action<StatelessServiceContext, string> logAction, string endpointName)
-        {
-            return new KestrelCommunicationListener(serviceContext, endpointName, (url, listener) =>
+            return new ServiceInstanceListener(x => new KestrelCommunicationListener(x, options.EndpointName, (url, listener) =>
             {
-                logAction(serviceContext, $"Starting Kestrel on {url}");
+
+                options.LogAction(x, $"Starting Kestrel. Earl: {url}. Content Directory: {options.ContentDirectory}");
 
                 return new WebHostBuilder()
                     .UseKestrel()
                     .ConfigureServices(services => services.AddSingleton(new HttpClient())
                         .AddSingleton(new FabricClient())
-                        .AddSingleton(serviceContext))
-                    .UseContentRoot(Directory.GetCurrentDirectory())
+                        .AddSingleton(x))
+                    .UseContentRoot(options.ContentDirectory)
                     .UseStartup<Startup>()
                     .UseApplicationInsights()
                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
                     .UseUrls(url)
                     .Build();
-            });
+            }));
         }
     }
 }
