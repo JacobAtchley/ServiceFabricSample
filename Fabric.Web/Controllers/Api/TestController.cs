@@ -9,7 +9,8 @@ namespace Fabric.Web.Controllers.Api
     [Route("/api/[controller]")]
     public class TestController : Controller
     {
-        public async Task<IActionResult> Get()
+        [HttpGet("orleans")]
+        public async Task<IActionResult> GetOrleansAsync()
         {
             var client = OrleansClientFactory.Get(
                 "fabric:/ServiceFabricSample/MyStatelessService",
@@ -24,6 +25,11 @@ namespace Fabric.Web.Controllers.Api
             var hello = await grain.SayHello();
 
             return Ok(hello);
+        }
+
+        public IActionResult Get()
+        {
+            return Ok($"Hello from the server! The current date and time is {DateTime.UtcNow:R}");
         }
     }
 }

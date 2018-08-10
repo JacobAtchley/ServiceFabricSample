@@ -10,7 +10,7 @@ namespace Grains.Implementations
         /// <inheritdoc />
         public Task<string> SayHello()
         {
-            return Task.FromResult($"Hello, the current time is {DateTime.UtcNow:R}");
+            return Task.FromResult($"Hello I'm the {nameof(IMyFirstGrain)} implementation. The current date and time is {DateTime.UtcNow:R}");
         }
     }
 }

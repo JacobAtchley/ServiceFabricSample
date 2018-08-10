@@ -31,15 +31,13 @@ namespace MyStatelessService
 
         protected override async Task RunAsync(CancellationToken cancellationToken)
         {
-            long iterations = 0;
-
             while (true)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                ServiceEventSource.Current.ServiceMessage(Context, "Working-{0}", ++iterations);
+                ServiceEventSource.Current.ServiceMessage(Context, $"I'm Still Alive! {DateTime.UtcNow:R}");
 
-                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+                await Task.Delay(TimeSpan.FromSeconds(10), cancellationToken);
             }
         }
     }
