@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrleansStateless.Client", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fabric", "Fabric", "{2A5B25C0-1772-4915-AD1A-ABE26A5B6DC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric.Orleans", "Fabric.Orleans\Fabric.Orleans.csproj", "{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabric.Orleans", "Fabric.Orleans\Fabric.Orleans.csproj", "{DF213E0F-93DD-4B30-83AA-FFDFD48B4C99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric.Web", "Fabric.Web\Fabric.Web.csproj", "{89245D4E-D1DC-4971-B59B-67859689C1CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabric.Web", "Fabric.Web\Fabric.Web.csproj", "{89245D4E-D1DC-4971-B59B-67859689C1CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orleans.Client", "Orleans.Client\Orleans.Client.csproj", "{CD0550D2-156A-439E-B17F-36E91EE00452}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Client", "Orleans.Client\Orleans.Client.csproj", "{CD0550D2-156A-439E-B17F-36E91EE00452}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C493BB90-31B1-44B3-8074-67DFE370468F}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{C493BB90-31B1-44B3-8074-67DFE370468F}.Debug|Any CPU.Build.0 = Debug|x64
+		{C493BB90-31B1-44B3-8074-67DFE370468F}.Debug|Any CPU.Deploy.0 = Debug|x64
 		{C493BB90-31B1-44B3-8074-67DFE370468F}.Debug|x64.ActiveCfg = Debug|x64
 		{C493BB90-31B1-44B3-8074-67DFE370468F}.Debug|x64.Build.0 = Debug|x64
 		{C493BB90-31B1-44B3-8074-67DFE370468F}.Debug|x64.Deploy.0 = Debug|x64

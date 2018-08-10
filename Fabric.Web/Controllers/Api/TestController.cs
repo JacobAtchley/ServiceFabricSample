@@ -19,8 +19,8 @@ namespace Fabric.Web.Controllers.Api
             await client.Connect();
 
             Console.WriteLine("Connected");
-
-            var grain = client.GetGrain<IMyFirstGrain>(Guid.Parse("0821E848-404D-4228-A647-D772480820AE"));
+            
+            var grain = client.GetGrain<IMyFirstGrain>(Guid.Parse("26440F3A-D615-4DF9-9E55-A2E740B17C9B"));
 
             var hello = await grain.SayHello();
 

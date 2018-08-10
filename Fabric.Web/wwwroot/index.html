@@ -9,25 +9,26 @@
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
 </head>
 <body>
-<div id="app">
-    <md-button class="md-primary md-raised" @click="checkIt">Check It!</md-button>
-<div>
-    <md-table>
-        <md-table-row>
-            <md-table-head md-numeric>Count</md-table-head>
-            <md-table-head>Message</md-table-head>
-        </md-table-row>
-        <md-table-row v-for="(call, index) in calls" :key="index">
-            <md-table-cell>
-                {{index}}
-            </md-table-cell>
-            <md-table-cell>
-                {{call}}
-            </md-table-cell>
-        </md-table-row>
-    </md-table>
+    <div id="app">
+        <md-button class="md-primary md-raised" @click="checkIt">Check It!</md-button>
+        <div>
+            <md-table>
+                <md-table-row>
+                    <md-table-head md-numeric>Count</md-table-head>
+                    <md-table-head>Message</md-table-head>
+                </md-table-row>
+                <md-table-row v-for="(call, index) in calls" :key="index">
+                    <md-table-cell>
+                        {{index}}
+                    </md-table-cell>
+                    <md-table-cell>
+                        {{call}}
+                    </md-table-cell>
+                </md-table-row>
+            </md-table>
+        </div>
     </div>
-</div>
+    <script src="/lib/signalr/signalr.min.js"></script>
     <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script src="https://unpkg.com/vue-material@beta"></script>

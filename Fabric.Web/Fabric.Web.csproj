@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.4.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
     <PackageReference Include="Microsoft.ServiceFabric" Version="6.3.162" />
@@ -27,6 +28,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Orleans.Client\Orleans.Client.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\signalr\" />
   </ItemGroup>
 
 </Project>
