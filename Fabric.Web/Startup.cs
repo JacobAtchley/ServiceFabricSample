@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Fabric.Web.Hubs;
+using Fabric.Web.Observers;
+using Grains.Interfaces;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +28,10 @@ namespace Fabric.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.AddSingleton<IHelloSubscriber, HelloSubscriber>();
+            services.AddScoped<IHelloObserver, HelloObserver>();
             services.AddMvc();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,7 +40,7 @@ namespace Fabric.Web
             ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"))
-                .AddDebug();
+                         .AddDebug();
 
             if (env.IsDevelopment())
             {
@@ -47,11 +53,15 @@ namespace Fabric.Web
             }
 
             app.UseDefaultFiles()
-                .UseStaticFiles()
-                .UseMvc(routes =>
-                {
-                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                });
+               .UseStaticFiles()
+               .UseSignalR(routes =>
+               {
+                   routes.MapHub<OrleansHub>("/hub");
+               })
+               .UseMvc(routes =>
+               {
+                   routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+               });
         }
     }
 }
