@@ -1,31 +1,42 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <title>My Stateless Service Fabric Web App</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default-dark.css">
 </head>
+
 <body>
     <div id="app">
-        <md-button class="md-primary md-raised" @click="checkIt">Check It!</md-button>
-        <div>
-            <md-table>
-                <md-table-row>
-                    <md-table-head md-numeric>Count</md-table-head>
-                    <md-table-head>Message</md-table-head>
-                </md-table-row>
-                <md-table-row v-for="(call, index) in calls" :key="index">
-                    <md-table-cell>
-                        {{index}}
-                    </md-table-cell>
-                    <md-table-cell>
-                        {{call}}
-                    </md-table-cell>
-                </md-table-row>
-            </md-table>
+        <div class="page-container">
+            <md-app>
+                <md-app-toolbar class="md-primary">
+                    <span class="md-title">Service Fabric Test</span>
+                </md-app-toolbar>
+                <md-app-content>
+                    <md-button class="md-primary md-raised" @click="checkIt">Check It!</md-button>
+                    <div>
+                        <md-table>
+                            <md-table-row>
+                                <md-table-head md-numeric>Count</md-table-head>
+                                <md-table-head>Message</md-table-head>
+                            </md-table-row>
+                            <md-table-row v-for="(call, index) in calls" :key="index">
+                                <md-table-cell md-numeric>
+                                    {{index}}
+                                </md-table-cell>
+                                <md-table-cell>
+                                    {{call}}
+                                </md-table-cell>
+                            </md-table-row>
+                        </md-table>
+                    </div>
+                </md-app-content>
+            </md-app>
         </div>
     </div>
     <script src="/lib/signalr/signalr.min.js"></script>
@@ -36,4 +47,5 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/app.js"></script>
 </body>
+
 </html>
