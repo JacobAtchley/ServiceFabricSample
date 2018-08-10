@@ -19,10 +19,10 @@ Vue.use(VueMaterial.default);
     },
     mounted: function () {
         var vm = this;
-        const connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
+        var connection = new signalR.HubConnectionBuilder().withUrl("/hub").build();
 
         connection.on("Hello", function (message) {
-            vm.calls.push(message);
+            vm.calls.push(message + ' (From Signal R)');
         });
 
         connection.start().catch(function (err) {
