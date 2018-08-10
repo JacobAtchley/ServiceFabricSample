@@ -1,4 +1,5 @@
-﻿using Grains.Interfaces;
+﻿using Fabric.Web.Models;
+using Grains.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Orleans.Client;
 using System;
@@ -9,8 +10,8 @@ namespace Fabric.Web.Controllers.Api
     [Route("/api/[controller]")]
     public class TestController : Controller
     {
-        [HttpGet("orleans")]
-        public async Task<IActionResult> GetOrleansAsync()
+        [HttpPost("chat")]
+        public async Task<IActionResult> GetOrleansAsync([FromBody]MessageViewModel message)
         {
             var client = OrleansClientFactory.Get(
                 "fabric:/ServiceFabricSample/MyStatelessService",
@@ -19,12 +20,12 @@ namespace Fabric.Web.Controllers.Api
             await client.Connect();
 
             Console.WriteLine("Connected");
-            
-            var grain = client.GetGrain<IMyFirstGrain>(Guid.Parse("26440F3A-D615-4DF9-9E55-A2E740B17C9B"));
 
-            var hello = await grain.SayHello();
+            var grain = client.GetGrain<IMyFirstGrain>(Guid.Empty);
 
-            return Ok(hello);
+            await grain.ChatAsync(message.Message);
+
+            return Ok();
         }
 
         public IActionResult Get()

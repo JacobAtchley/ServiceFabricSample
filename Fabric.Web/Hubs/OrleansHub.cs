@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR;
+using Oreleans.Observers;
+using System;
 using System.Threading.Tasks;
-using Fabric.Web.Observers;
-using Grains.Interfaces;
-using Microsoft.AspNetCore.SignalR;
-using Orleans.Client;
 
 namespace Fabric.Web.Hubs
 {
@@ -11,7 +9,7 @@ namespace Fabric.Web.Hubs
     {
         private readonly IHelloSubscriber _subscriber;
         private static volatile int _clientCount = 0;
-        private static readonly object _key = new object();  
+        private static readonly object _key = new object();
 
         public OrleansHub(IHelloSubscriber subscriber)
         {

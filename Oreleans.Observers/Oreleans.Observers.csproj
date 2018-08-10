@@ -1,7 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
@@ -9,9 +8,8 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <ProjectReference Include="..\Oreleans.Observers\Oreleans.Observers.csproj" />
+    <ProjectReference Include="..\Grains.Interfaces\Grains.Interfaces.csproj" />
     <ProjectReference Include="..\Orleans.Client\Orleans.Client.csproj" />
   </ItemGroup>
 

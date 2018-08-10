@@ -18,6 +18,10 @@
                     <span class="md-title">Service Fabric Test</span>
                 </md-app-toolbar>
                 <md-app-content>
+                    <md-field>
+                        <label>Chat Message</label>
+                        <md-input v-model="message"></md-input>
+                    </md-field>
                     <md-button class="md-primary md-raised" @click="checkIt">Check It!</md-button>
                     <div>
                         <md-table>

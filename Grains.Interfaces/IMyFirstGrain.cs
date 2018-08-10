@@ -5,7 +5,8 @@ namespace Grains.Interfaces
 {
     public interface IMyFirstGrain : IGrainWithGuidKey
     {
-        Task<string> SayHello();
+        Task ChatAsync(string message);
+
         Task Subscribe(IHelloObserver observer);
     }
 }

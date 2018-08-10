@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Grains.Interfaces;
+using Orleans.Client;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Grains.Interfaces;
-using Orleans.Client;
 
-namespace Fabric.Web.Observers
+namespace Oreleans.Observers
 {
     public interface IHelloSubscriber
     {
@@ -33,8 +33,8 @@ namespace Fabric.Web.Observers
             await client.Connect();
 
             Console.WriteLine("Connected");
-            
-            _grain = client.GetGrain<IMyFirstGrain>(Guid.Parse("26440F3A-D615-4DF9-9E55-A2E740B17C9B"));
+
+            _grain = client.GetGrain<IMyFirstGrain>(Guid.Empty);
 
             _observerReference = await client.CreateObjectReference<IHelloObserver>(_observer);
             _cancellationToken = new CancellationTokenSource();

@@ -4,17 +4,19 @@ Vue.use(VueMaterial.default);
     el: '#app',
     data: function() {
         return {
-            calls: []
+            calls: [],
+            message: ''
         };
     },
     methods: {
         checkIt: function() {
             var vm = this;
 
-            axios.get('/api/test/orleans')
-                .then(function(x) {
-                    vm.calls.push(x.data);
-                });
+            if (!vm.message) {
+                return;
+            }
+
+            axios.post('/api/test/chat', { message: vm.message });
         }
     },
     mounted: function () {
