@@ -1,7 +1,8 @@
 ﻿using Grains.Interfaces;
+using Oreleans.Observers;
+using Orleans.Client;
 using System;
 using System.Threading.Tasks;
-using Orleans.Client;
 
 namespace OrleansStateless.Client
 {
@@ -24,16 +25,27 @@ namespace OrleansStateless.Client
 
             await client.Connect();
 
-            Console.WriteLine("Connected");
 
-            var grain = client.GetGrain<IMyFirstGrain>(Guid.Parse("26440F3A-D615-4DF9-9E55-A2E740B17C9B"));
+            var grain = client.GetGrain<IMyFirstGrain>(Guid.Empty);
 
-            while (true)
+            var subscriber = new HelloSubscriber(new ClientHelloObserver());
+
+            await subscriber.InitClientAsync();
+
+            Console.WriteLine("Connected. Type a messge to send. Type quit to exit.");
+
+            string message;
+
+            do
             {
-                var hello = await grain.SayHello();
-                Console.WriteLine(hello);
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                message = Console.ReadLine();
+
+                if (message != "quit")
+                {
+                    await grain.ChatAsync(message);
+                }
             }
+            while (message != "quit");
         }
     }
 }

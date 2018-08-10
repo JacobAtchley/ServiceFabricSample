@@ -13,16 +13,17 @@ namespace Grains.Implementations
         };
 
         /// <inheritdoc />
-        public Task<string> SayHello()
+        public Task ChatAsync(string message)
         {
-            var message = $"Hello I'm the {nameof(IMyFirstGrain)} implementation. The current date and time is {DateTime.UtcNow:R}";
             _observers.Notify(observer => observer.MessageUpdated(message));
-            return Task.FromResult(message);
+
+            return Task.CompletedTask;
         }
 
         public Task Subscribe(IHelloObserver observer)
         {
             _observers.Subscribe(observer);
+
             return Task.CompletedTask;
         }
     }
