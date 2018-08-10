@@ -9,14 +9,14 @@ Vue.use(VueMaterial.default);
         };
     },
     methods: {
-        checkIt: function() {
+        postMessage: function() {
             var vm = this;
 
             if (!vm.message) {
                 return;
             }
 
-            axios.post('/api/test/chat', { message: vm.message });
+            axios.post('/api/test/chat', { message: vm.message }).then(() => vm.message = '');
         }
     },
     mounted: function () {

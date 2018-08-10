@@ -20,9 +20,9 @@
                 <md-app-content>
                     <md-field>
                         <label>Chat Message</label>
-                        <md-input v-model="message"></md-input>
+                        <md-input v-model="message" @keyup.enter="postMessage" ></md-input>
                     </md-field>
-                    <md-button class="md-primary md-raised" @click="checkIt">Check It!</md-button>
+                    <md-button class="md-primary md-raised" @click="postMessage">Post Message</md-button>
                     <div>
                         <md-table>
                             <md-table-row>
