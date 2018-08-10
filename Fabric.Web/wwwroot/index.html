@@ -31,29 +31,8 @@
     <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script src="https://unpkg.com/vue-material@beta"></script>
-<script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-    Vue.use(VueMaterial.default);
-
-    var App = new Vue({
-        el: '#app',
-        data: function() {
-            return {
-                calls: []
-            }
-        },
-        methods: {
-            checkIt: function() {
-                var vm = this;
-
-                axios.get('/api/test/orleans')
-                    .then(function(x) {
-                        vm.calls.push(x.data);
-                    });
-            }
-        }
-    });
-</script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
