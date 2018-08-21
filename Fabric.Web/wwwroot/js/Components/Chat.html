@@ -1,0 +1,23 @@
+﻿<div>
+    <md-field>
+        <label>Chat Message</label>
+        <md-input v-model="message" @keyup.enter="postMessage"></md-input>
+    </md-field>
+    <md-button class="md-primary md-raised" @click="postMessage">Post Message</md-button>
+    <div>
+        <md-table>
+            <md-table-row>
+                <md-table-head md-numeric>Count</md-table-head>
+                <md-table-head>Message</md-table-head>
+            </md-table-row>
+            <md-table-row v-for="(call, index) in calls" :key="index">
+                <md-table-cell md-numeric>
+                    {{index}}
+                </md-table-cell>
+                <md-table-cell>
+                    {{call}}
+                </md-table-cell>
+            </md-table-row>
+        </md-table>
+    </div>
+</div>

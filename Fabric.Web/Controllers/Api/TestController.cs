@@ -25,7 +25,7 @@ namespace Fabric.Web.Controllers.Api
 
             await grain.ChatAsync(message.Message);
 
-            return Ok();
+            return Ok("Message Processed");
         }
 
         public IActionResult Get()

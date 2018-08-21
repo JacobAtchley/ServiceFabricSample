@@ -17,39 +17,39 @@
                 <md-app-toolbar class="md-primary">
                     <span class="md-title">Service Fabric Test</span>
                 </md-app-toolbar>
+                <md-app-drawer md-permanent="full">
+                    <md-toolbar class="md-transparent" md-elevation="0">
+                        Navigation
+                    </md-toolbar>
+                    <md-list>
+                        <md-list-item>
+                            <router-link :to="{name: 'home'}">
+                                Home
+                            </router-link>
+                        </md-list-item>
+                        <md-list-item>
+                            <router-link :to="{name: 'chat'}">
+                                Chat
+                            </router-link>
+                        </md-list-item>
+                    </md-list>
+                </md-app-drawer>
                 <md-app-content>
-                    <md-field>
-                        <label>Chat Message</label>
-                        <md-input v-model="message" @keyup.enter="postMessage" ></md-input>
-                    </md-field>
-                    <md-button class="md-primary md-raised" @click="postMessage">Post Message</md-button>
-                    <div>
-                        <md-table>
-                            <md-table-row>
-                                <md-table-head md-numeric>Count</md-table-head>
-                                <md-table-head>Message</md-table-head>
-                            </md-table-row>
-                            <md-table-row v-for="(call, index) in calls" :key="index">
-                                <md-table-cell md-numeric>
-                                    {{index}}
-                                </md-table-cell>
-                                <md-table-cell>
-                                    {{call}}
-                                </md-table-cell>
-                            </md-table-row>
-                        </md-table>
-                    </div>
+                    <transition name="slide">
+                        <router-view></router-view>
+                    </transition>
                 </md-app-content>
             </md-app>
         </div>
     </div>
     <script src="/lib/signalr/signalr.min.js"></script>
     <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-material@beta"></script>
     <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="/js/app.js" type="module"></script>
 </body>
 
 </html>
