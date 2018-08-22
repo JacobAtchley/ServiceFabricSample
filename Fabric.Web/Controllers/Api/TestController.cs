@@ -28,6 +28,7 @@ namespace Fabric.Web.Controllers.Api
             return Ok("Message Processed");
         }
 
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok($"Hello from the server! The current date and time is {DateTime.UtcNow:R}");

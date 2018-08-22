@@ -1,12 +1,11 @@
 ﻿using Fabric.Web.Hubs;
-using Fabric.Web.Observers;
-using Grains.Interfaces;
+using Fabric.Web.OnStart;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Oreleans.Observers;
+using System.IO;
 
 namespace Fabric.Web
 {
@@ -14,10 +13,13 @@ namespace Fabric.Web
     {
         public Startup(IHostingEnvironment env)
         {
+            var daRoot = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web";
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
+                .AddJsonFile($"{daRoot}\\appsettings.secrets.json", true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -29,8 +31,7 @@ namespace Fabric.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddSingleton<IHelloSubscriber, HelloSubscriber>();
-            services.AddScoped<IHelloObserver, HelloObserver>();
+            services.ConfigureMyAppServices(Configuration);
             services.AddMvc();
             services.AddSignalR();
         }
@@ -43,10 +44,11 @@ namespace Fabric.Web
             loggerFactory.AddConsole(Configuration.GetSection("Logging"))
                          .AddDebug();
 
+            app.UseDeveloperExceptionPage();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage()
-                    .UseBrowserLink();
+                app.UseBrowserLink();
             }
             else
             {
