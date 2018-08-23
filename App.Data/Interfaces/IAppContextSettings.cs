@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 
 namespace App.Data.Interfaces
 {
@@ -12,6 +13,12 @@ namespace App.Data.Interfaces
         public AppContextSettings(IConfiguration config)
         {
             ConnectionString = config.GetConnectionString("Db");
+
+            if (string.IsNullOrWhiteSpace(ConnectionString))
+            {
+                throw new ArgumentException(
+                    $"Could not find connection string for {nameof(AppContextSettings)}");
+            }
         }
 
         /// <inheritdoc />

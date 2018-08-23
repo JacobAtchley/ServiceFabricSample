@@ -1,31 +1,16 @@
-﻿using Fabric.Web.Models;
-using Grains.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Orleans.Client;
+﻿using Microsoft.AspNetCore.Mvc;
+using Orleans;
 using System;
-using System.Threading.Tasks;
 
 namespace Fabric.Web.Controllers.Api
 {
     [Route("/api/[controller]")]
     public class TestController : Controller
     {
-        [HttpPost("chat")]
-        public async Task<IActionResult> GetOrleansAsync([FromBody]MessageViewModel message)
+        private readonly IClusterClient _clusterClient;
+        public TestController(IClusterClient clusterClient)
         {
-            var client = OrleansClientFactory.Get(
-                "fabric:/ServiceFabricSample/MyStatelessService",
-                "UseDevelopmentStorage=true");
-
-            await client.Connect();
-
-            Console.WriteLine("Connected");
-
-            var grain = client.GetGrain<IMyFirstGrain>(Guid.Empty);
-
-            await grain.ChatAsync(message.Message);
-
-            return Ok("Message Processed");
+            _clusterClient = clusterClient;
         }
 
         [HttpGet]

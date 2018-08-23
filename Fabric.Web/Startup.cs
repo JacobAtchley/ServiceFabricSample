@@ -50,10 +50,6 @@ namespace Fabric.Web
             {
                 app.UseBrowserLink();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
 
             app.UseDefaultFiles()
                .UseStaticFiles()

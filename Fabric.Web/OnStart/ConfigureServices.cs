@@ -8,6 +8,7 @@ using Grains.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Oreleans.Observers;
+using Orleans.Client;
 using System;
 
 namespace Fabric.Web.OnStart
@@ -22,6 +23,10 @@ namespace Fabric.Web.OnStart
             source.AddScoped<IAppDbContext, AppDbContext>();
             source.AddScoped<IAppContextSettings, AppContextSettings>();
             source.AddScoped<ICrudRepo<Guid, Person>, PeopleRepository>();
+
+            source.AddScoped(provider => OrleansClientFactory.Get(
+                "fabric:/ServiceFabricSample/MyStatelessService",
+                "UseDevelopmentStorage=true"));
 
             return source;
         }

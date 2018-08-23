@@ -16,7 +16,7 @@ export default factory({
                     return;
                 }
 
-                axios.post('/api/test/chat', { message: this.message })
+                axios.post('/api/chat', { message: this.message })
                     .then(() => this.message = '');
             }
         },

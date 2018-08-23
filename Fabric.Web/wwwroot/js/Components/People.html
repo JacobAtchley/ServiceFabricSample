@@ -1,0 +1,43 @@
+<md-progress-spinner
+    v-if="loading"
+    :md-diameter="100"
+    :md-stroke="10"
+    md-mode="indeterminate">
+</md-progress-spinner>
+<div v-else>
+    <md-table
+        v-if="hasPeople"
+        v-model="people"
+        md-sort="lastName"
+        md-sort-order="asc" 
+        md-card>
+        <md-table-toolbar>
+            <h1 class="md-title">People</h1>
+        </md-table-toolbar>
+        <md-table-row slot="md-table-row" slot-scope="{ item }">
+            <md-table-cell
+                md-label="Last Name"
+                md-sort-by="lastName">
+                {{ item.lastName }}
+            </md-table-cell>
+            <md-table-cell
+                md-label="First Name"
+                md-sort-by="firstName">
+                {{ item.firstName }}
+            </md-table-cell>
+            <md-table-cell
+                md-label="Email"
+                md-sort-by="emailAddress">
+                {{ item.emailAddress }}
+            </md-table-cell>
+        </md-table-row>
+    </md-table>
+    <md-empty-state
+        v-else
+        class="md-accent"
+        md-rounded
+        md-icon="not_interested"
+        md-label="No Data"
+        md-description="There are currently no people!">
+    </md-empty-state>
+</div>
