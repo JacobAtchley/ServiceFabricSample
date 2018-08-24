@@ -1,5 +1,4 @@
 import factory from '/js/Utils/ComponentFactory.js';
-import Person from '/js/Models/Person.js';
 
 export default factory({
     name: 'home',
