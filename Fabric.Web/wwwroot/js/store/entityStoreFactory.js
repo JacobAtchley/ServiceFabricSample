@@ -3,7 +3,7 @@ const storeFactory = function(options) {
         namespaced: true,
 
         state : {
-            entities: []
+            entities: null
         },
 
         getters : {
@@ -12,19 +12,20 @@ const storeFactory = function(options) {
         actions : {
         getAll({ commit, state }){
             return new Promise((resolve, reject) => {
-                
-                if(state.entities){
-                    resolve(state.entities);
-                }
+                    if(state.entities && state.entities.length > 0){
+                        resolve(state.entities);
+                    }
 
-                axios.get(options.rootUrl)
-                .then(x => (x.data ||[]).map(d => options.mapper(d)))
-                .then(x => commit('setEntities',x))
-                .catch(e => {
-                    reject(e);
+                    axios.get(options.rootUrl)
+                        .then(x => {
+                            var entities = (x.data ||[]).map(d => options.mapper(d));
+                            commit('setEntities', entities);
+                            resolve(entities);
+                        } )
+                        .catch(e => {
+                            reject(e);
+                        });
                 });
-
-            });
             }
         },
 
