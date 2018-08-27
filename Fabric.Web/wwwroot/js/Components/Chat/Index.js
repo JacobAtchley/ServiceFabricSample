@@ -2,7 +2,7 @@
 
 export default factory({
     name: 'chat',
-    path: '/js/Components/chat.html',
+    path: '/js/Components/Chat/Index.html',
     vue: {
         data() {
             return {

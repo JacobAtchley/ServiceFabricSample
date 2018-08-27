@@ -27,7 +27,7 @@ namespace Fabric.Web
             {
                 if (Guid.TryParse(source, out var g))
                 {
-                    return (TKey)Convert.ChangeType(g, typeof(long));
+                    return (TKey)Convert.ChangeType(g, typeof(Guid));
                 }
 
             }

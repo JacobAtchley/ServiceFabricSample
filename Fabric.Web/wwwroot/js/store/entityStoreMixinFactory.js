@@ -6,9 +6,16 @@ const mixinFactory = function(options) {
         computed: mapState({
             entities : state => state[options.module].entities
         }),
-        methods: mapActions(options.module, [
-            'getAll'
-        ]),
+        methods: Object.assign({}, mapActions(options.module, [
+            'getAll',
+            'getById',
+            'addEntity',
+            'updateEntity'
+        ]), {
+            mergeEntity(e){
+                return !!e.id ? this.updateEntity(e) : this.addEntity(e);
+            }
+        }),
         created () {
             if(options.fetchOnCreated){
                 this.getAll();

@@ -1,0 +1,76 @@
+<md-progress-spinner
+    v-if="loading"
+    :md-diameter="100"
+    :md-stroke="10"
+    md-mode="indeterminate">
+</md-progress-spinner>
+<div v-else>
+    <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <md-card-header>
+            <div class="md-title">Edit Person</div>
+        </md-card-header>
+
+        <md-card-content>
+            <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                    <md-field :class="{'md-invalid': errors.has('First Name')}">
+                        <label for="first-name">
+                            First Name
+                        </label>
+                        <md-input
+                            name="first-name"
+                            id="first-name"
+                            v-model="person.firstName"
+                            v-validate="'required'"
+                            data-vv-name="First Name"
+                            :disabled="submitting"/>
+                    </md-field>
+                    <span class="md-error">{{ errors.first('First Name') }}</span>
+                </div>
+                <div class="md-layout-item md-small-size-100">
+                    <md-field :class="{'md-invalid': errors.has('Last Name')}">
+                        <label for="last-name">
+                            Last Name
+                        </label>
+                        <md-input
+                            name="last-name"
+                            id="last-name"
+                            v-model="person.lastName"
+                            v-validate="'required'"
+                            data-vv-name="Last Name"
+                            :disabled="submitting"/>
+                    </md-field>
+                    <span class="md-error">{{ errors.first('Last Name') }}</span>
+                </div>
+                <div class="md-layout-item md-small-size-100">
+                    <md-field :class="{'md-invalid': errors.has('Email')}">
+                        <label for="email">Email</label>
+                        <md-input
+                            name="email"
+                            id="email"
+                            v-model="person.emailAddress"
+                            v-validate="'required|email'"
+                            data-vv-name="Email"
+                            :disabled="submitting"/>
+                    </md-field>
+                    <span class="md-error">{{ errors.first('Email') }}</span>
+                </div>
+            </div>
+        </md-card-content>
+
+        <md-card-actions>
+            <md-button
+                class="md-primary md-raised"
+                :disabled="!canSave"
+                @click="save">
+                Save
+            </md-button>
+            <md-button
+                class="md-primary md-accent"
+                :disabled="submitting"
+                @click="$router.go(-1)">
+                Cancel
+            </md-button>
+        </md-card-actions>
+    </md-card>
+</div>

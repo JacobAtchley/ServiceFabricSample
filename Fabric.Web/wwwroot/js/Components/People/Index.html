@@ -7,7 +7,7 @@
 <div v-else>
     <md-table
         v-if="hasPeople"
-        v-model="entities"
+        v-model="people"
         md-sort="lastName"
         md-sort-order="asc" 
         md-card>
@@ -29,6 +29,19 @@
                 md-label="Email"
                 md-sort-by="emailAddress">
                 {{ item.emailAddress }}
+            </md-table-cell>
+            <md-table-cell
+                md-label="Edit">
+                <md-button
+                    :to="{
+                        name: 'people-edit',
+                        params: {
+                            id: item.id
+                        }
+                    }"
+                    class="md-primary">
+                    <md-icon>edit</md-icon>
+                </md-button>
             </md-table-cell>
         </md-table-row>
     </md-table>

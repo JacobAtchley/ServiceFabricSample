@@ -17,40 +17,6 @@
 
 <body>
     <div id="app" v-cloak>
-        <div class="page-container">
-            <md-app>
-                <md-app-toolbar class="md-primary">
-                    <span class="md-title">Service Fabric Test</span>
-                </md-app-toolbar>
-                <md-app-drawer md-permanent="full">
-                    <md-toolbar class="md-transparent" md-elevation="0">
-                        Navigation
-                    </md-toolbar>
-                    <md-list>
-                        <md-list-item>
-                            <router-link :to="{name: 'home'}">
-                                Home
-                            </router-link>
-                        </md-list-item>
-                        <md-list-item>
-                            <router-link :to="{name: 'chat'}">
-                                Chat
-                            </router-link>
-                        </md-list-item>
-                        <md-list-item>
-                            <router-link :to="{name: 'people'}">
-                                People
-                            </router-link>
-                        </md-list-item>
-                    </md-list>
-                </md-app-drawer>
-                <md-app-content>
-                    <transition name="fade" mode="out-in">
-                        <router-view></router-view>
-                    </transition>
-                </md-app-content>
-            </md-app>
-        </div>
     </div>
     <script src="/lib/signalr/signalr.min.js"></script>
     
@@ -61,6 +27,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/vuex/dist/vuex.js"></script>
+    <script src="https://unpkg.com/vee-validate@latest"></script>
     
     <script src="/js/app.js" type="module"></script>
 </body>

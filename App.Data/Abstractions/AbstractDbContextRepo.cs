@@ -2,6 +2,7 @@
 using App.Core.Interfaces.Data;
 using App.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,8 +51,26 @@ namespace App.Data.Abstractions
         public async Task<TEntity> UpdateAsync(TKey key, TEntity entity)
         {
             entity.Id = key;
-            var entry = GetDbSet().Attach(entity);
-            entry.State = EntityState.Modified;
+
+            var entry = _context.Entry(entity);
+
+            if (entry.State == EntityState.Detached)
+            {
+                var set = GetDbSet();
+
+                var found = await set.FindAsync(key);
+
+                if (found != null)
+                {
+                    entity.CopyPropertiesTo(found, "Id");
+                }
+                else
+                {
+                    set.Attach(entity);
+                    entry.State = EntityState.Modified;
+                }
+
+            }
 
             await _context.SaveChangesAsync(CancellationToken.None);
 
@@ -61,12 +80,30 @@ namespace App.Data.Abstractions
         /// <inheritdoc />
         public async Task DeleteAsync(TKey key)
         {
-            var entry = GetDbSet().Attach(new TEntity
+            var entity = new TEntity
             {
                 Id = key
-            });
+            };
 
-            entry.State = EntityState.Modified;
+            var entry = _context.Entry(entity);
+
+            if (entry.State == EntityState.Detached)
+            {
+                var set = GetDbSet();
+
+                var found = await set.FindAsync(key);
+
+                if (found != null)
+                {
+                    set.Remove(found);
+                }
+                else
+                {
+                    set.Attach(entity);
+                    entry.State = EntityState.Modified;
+                }
+
+            }
 
             await _context.SaveChangesAsync(CancellationToken.None);
         }

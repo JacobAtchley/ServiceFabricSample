@@ -3,5 +3,6 @@ export default class {
         this.firstName = model.firstName || '';
         this.lastName = model.lastName || '';
         this.emailAddress = model.emailAddress || '';
+        this.id = model.id || null;
     }
 }
