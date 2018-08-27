@@ -6,6 +6,7 @@ using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Orleans.Client;
 using System.Fabric;
+using System.Fabric.Description;
 using System.Net.Http;
 
 namespace Fabric.Web
@@ -17,6 +18,10 @@ namespace Fabric.Web
             return new ServiceInstanceListener(x => new KestrelCommunicationListener(x, options.EndpointName, (url, listener) =>
             {
 
+                var activation = x.CodePackageActivationContext;
+                var settings = activation.GetConfigurationPackageObject("Config").Settings;
+                var myConfig = settings.Sections["MyConfigSection"];
+
                 options.LogAction(x, $"Starting Kestrel. Earl: {url}. Content Directory: {options.ContentDirectory}");
 
                 return new WebHostBuilder()
@@ -25,7 +30,7 @@ namespace Fabric.Web
                         .AddSingleton(new FabricClient())
                         .AddSingleton(x))
                     .UseContentRoot(options.ContentDirectory)
-                    .ConfigureServices(c => ConfigureServices(c, options))
+                    .ConfigureServices(c => ConfigureServices(c, myConfig))
                     .UseStartup<Startup>()
                     .UseApplicationInsights()
                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
@@ -34,9 +39,9 @@ namespace Fabric.Web
             }));
         }
 
-        private static void ConfigureServices(IServiceCollection services, WebClientFactoryOptions options)
+        private static void ConfigureServices(IServiceCollection services,
+            ConfigurationSection configSection)
         {
-            var configSection = options.FabricConfiguration.Sections["MyConfigSection"];
             var tableStorage = configSection.Parameters["TableStorageConnectionString"].Value;
             var db = configSection.Parameters["DbConnectionString"].Value;
 

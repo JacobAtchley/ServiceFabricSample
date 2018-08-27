@@ -19,28 +19,29 @@ namespace Fabric.Orleans
 {
     public static class OrleansServiceInstanceListenerFactory
     {
-        public static ServiceInstanceListener Get(ConfigurationSettings settings)
+        public static ServiceInstanceListener Get()
         {
-            return OrleansServiceListener.CreateStateless((context, builder) => Configure(context, builder, settings));
+            return OrleansServiceListener.CreateStateless(Configure);
         }
 
-        private static void Configure(ServiceContext context, ISiloHostBuilder builder, ConfigurationSettings settings)
+        private static void Configure(ServiceContext context, ISiloHostBuilder builder)
         {
-            builder.ConfigureServices((ctx, coll) => ConfigureServices(ctx, coll, settings));
-
             builder.Configure<ClusterOptions>(options =>
             {
                 options.ServiceId = context.ServiceName.ToString();
                 options.ClusterId = "development";
             });
 
-            var tableStorage = settings.Sections["MyConfigSection"].Parameters["TableStorageConnectionString"].Value;
-
-            builder.UseAzureStorageClustering(options => options.ConnectionString = tableStorage);
 
             builder.ConfigureLogging(logging => logging.AddDebug());
 
             var activation = context.CodePackageActivationContext;
+            var settings = activation.GetConfigurationPackageObject("Config").Settings;
+            var myConfig = settings.Sections["MyConfigSection"];
+
+            builder.UseAzureStorageClustering(options =>
+                options.ConnectionString = myConfig.Parameters["TableStorageConnectionString"].Value);
+
             var endpoints = activation.GetEndpoints();
 
             var siloEndpoint = endpoints["OrleansSiloEndpoint"];
@@ -54,11 +55,14 @@ namespace Fabric.Orleans
                 parts.AddApplicationPart(typeof(MyFirstGrain).Assembly).WithReferences();
                 parts.AddFromApplicationBaseDirectory();
             });
+
+            builder.ConfigureServices((ctx, coll) => ConfigureServices(coll, myConfig));
+
         }
 
-        private static void ConfigureServices(HostBuilderContext ctx, IServiceCollection services, ConfigurationSettings settings)
+        private static void ConfigureServices(IServiceCollection services, ConfigurationSection settings)
         {
-            var db = settings.Sections["MyConfigSection"].Parameters["DbConnectionString"].Value;
+            var db = settings.Parameters["DbConnectionString"].Value;
 
             services.AddSingleton<IAppContextSettings>(new AppContextSettings(db));
 
