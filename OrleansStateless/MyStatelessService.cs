@@ -22,15 +22,18 @@ namespace MyStatelessService
 
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
+            var settings = Context.CodePackageActivationContext.GetConfigurationPackageObject("Config").Settings;
+
             return new[]
             {
-                OrleansServiceInstanceListenerFactory.Get(),
+                OrleansServiceInstanceListenerFactory.Get(settings),
 
                 WebClientFactory.Get(new WebClientFactoryOptions
                 {
                     ContentDirectory = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web",
                     EndpointName = "Web",
-                    LogAction = (ctx, log) => ServiceEventSource.Current.ServiceMessage(ctx, log)
+                    LogAction = (ctx, log) => ServiceEventSource.Current.ServiceMessage(ctx, log),
+                    FabricConfiguration = settings
                 })
             };
         }

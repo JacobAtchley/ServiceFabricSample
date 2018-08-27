@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 /Fabric.Web/appsettings.secrets.json
+/ServiceFabricSample/PublishProfiles/**/*.*
+/ServiceFabricSample/ApplicationParameters/**/*.*

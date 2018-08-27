@@ -3,9 +3,7 @@ using App.Core.Models;
 using App.Data;
 using App.Data.Implementations;
 using App.Data.Interfaces;
-using Fabric.Orleans.Implementations;
 using Grains.Implementations;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
@@ -15,20 +13,20 @@ using Orleans.Hosting;
 using Orleans.Hosting.ServiceFabric;
 using System;
 using System.Fabric;
-using System.IO;
+using System.Fabric.Description;
 
 namespace Fabric.Orleans
 {
     public static class OrleansServiceInstanceListenerFactory
     {
-        public static ServiceInstanceListener Get()
+        public static ServiceInstanceListener Get(ConfigurationSettings settings)
         {
-            return OrleansServiceListener.CreateStateless(Configure);
+            return OrleansServiceListener.CreateStateless((context, builder) => Configure(context, builder, settings));
         }
 
-        private static void Configure(StatelessServiceContext context, ISiloHostBuilder builder)
+        private static void Configure(ServiceContext context, ISiloHostBuilder builder, ConfigurationSettings settings)
         {
-            builder.ConfigureServices(ConfigureServices);
+            builder.ConfigureServices((ctx, coll) => ConfigureServices(ctx, coll, settings));
 
             builder.Configure<ClusterOptions>(options =>
             {
@@ -36,7 +34,9 @@ namespace Fabric.Orleans
                 options.ClusterId = "development";
             });
 
-            builder.UseAzureStorageClustering(options => options.ConnectionString = "UseDevelopmentStorage=true");
+            var tableStorage = settings.Sections["MyConfigSection"].Parameters["TableStorageConnectionString"].Value;
+
+            builder.UseAzureStorageClustering(options => options.ConnectionString = tableStorage);
 
             builder.ConfigureLogging(logging => logging.AddDebug());
 
@@ -56,18 +56,11 @@ namespace Fabric.Orleans
             });
         }
 
-        private static void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
+        private static void ConfigureServices(HostBuilderContext ctx, IServiceCollection services, ConfigurationSettings settings)
         {
-            var daRoot = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web";
+            var db = settings.Sections["MyConfigSection"].Parameters["DbConnectionString"].Value;
 
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"{daRoot}\\appsettings.secrets.json", true);
-
-            var configuration = builder.Build();
-
-            services.AddSingleton<IAppContextSettings>(
-                new AppContextSettingsOrleans(configuration.GetConnectionString("Db")));
+            services.AddSingleton<IAppContextSettings>(new AppContextSettings(db));
 
             services.AddScoped<IAppDbContext, AppDbContext>();
             services.AddScoped<ICrudRepo<Guid, Person>, PeopleRepository>();

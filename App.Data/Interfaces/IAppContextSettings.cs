@@ -21,6 +21,11 @@ namespace App.Data.Interfaces
             }
         }
 
+        public AppContextSettings(string connectionString)
+        {
+            ConnectionString = connectionString;
+        }
+
         /// <inheritdoc />
         public string ConnectionString { get; }
     }

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.IO;
 
 namespace Fabric.Web
 {
@@ -13,13 +12,10 @@ namespace Fabric.Web
     {
         public Startup(IHostingEnvironment env)
         {
-            var daRoot = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web";
-
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
-                .AddJsonFile($"{daRoot}\\appsettings.secrets.json", true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
