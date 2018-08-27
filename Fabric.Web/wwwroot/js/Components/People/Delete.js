@@ -3,12 +3,12 @@ import mixin from '/js/store/people/mixin.js';
 
 export default factory({
     name: 'home',
-    path: '/js/Components/People/Edit.html',
+    path: '/js/Components/People/Delete.html',
     vue: {
         props: {
             id:{
                 type: String,
-                required: false
+                required: true
             }
         },
         mixins: [mixin],
@@ -19,28 +19,15 @@ export default factory({
                 submitting: false,
             };
         },
-        computed: {
-            hasErrors () {
-                return this.errors.any();
-            },
-            canSave () {
-                return !this.hasErrors && !this.submitting && this.isFormDirty;
-            }
-        },
         methods:{
             save(){
-                this.validateAll().then(() => {
-                    this.mergeEntity(this.person).then(() => this.$router.go(-1))
-                });
+                this.deleteEntity(this.person.id)
+                    .then(() => {
+                        this.$router.go(-1);
+                    });
             }
         },
         mounted() {
-            if(!this.id){
-                this.person = {};
-                this.loading = false;
-                return;
-            }
-
             this.loading = true;
 
             this.getById(this.id)

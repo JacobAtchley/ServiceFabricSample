@@ -3,7 +3,7 @@ import Home from '/js/Components/Home.js';
 import Chat from '/js/Components/Chat/Index.js';
 import People from '/js/Components/People/Index.js';
 import PeopleEdit from '/js/Components/People/Edit.js';
-
+import PeopleDelete from '/js/Components/People/Delete.js';
 export default [{
     path: '/',
     name: 'default',
@@ -28,12 +28,19 @@ export default [{
             name: 'people',
             component: People
         },{
-            path: ':id',
+            path: '/edit/:id?',
             name: 'people-edit',
             component: PeopleEdit,
             props: route => ({
                 id: route.params.id ? route.params.id.toString() : null,
                 person: route.params.person || null
+            })
+        }, {
+            path: '/delete/:id?',
+            name: 'people-delete',
+            component: PeopleDelete,
+            props: route => ({
+                id: route.params.id
             })
         }]
     }]

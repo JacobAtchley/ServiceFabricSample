@@ -26,29 +26,29 @@ namespace App.Data.Abstractions
         }
 
         /// <inheritdoc />
-        public Task<TEntity> GetByKeyAsync(TKey key)
+        public Task<TEntity> GetByKeyAsync(TKey key, CancellationToken cancellationToken)
         {
             return GetDbSet().FindAsync(key);
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await GetDbSet().ToArrayAsync().ConfigureAwait(false);
+            return await GetDbSet().ToArrayAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            var e = (await GetDbSet().AddAsync(entity).ConfigureAwait(false)).Entity;
+            var e = (await GetDbSet().AddAsync(entity, cancellationToken).ConfigureAwait(false)).Entity;
 
-            await _context.SaveChangesAsync(CancellationToken.None);
+            await _context.SaveChangesAsync(cancellationToken);
 
             return e;
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> UpdateAsync(TKey key, TEntity entity)
+        public async Task<TEntity> UpdateAsync(TKey key, TEntity entity, CancellationToken cancellationToken)
         {
             entity.Id = key;
 
@@ -72,13 +72,13 @@ namespace App.Data.Abstractions
 
             }
 
-            await _context.SaveChangesAsync(CancellationToken.None);
+            await _context.SaveChangesAsync(cancellationToken);
 
             return entry.Entity;
         }
 
         /// <inheritdoc />
-        public async Task DeleteAsync(TKey key)
+        public async Task DeleteAsync(TKey key, CancellationToken cancellationToken)
         {
             var entity = new TEntity
             {
@@ -100,12 +100,12 @@ namespace App.Data.Abstractions
                 else
                 {
                     set.Attach(entity);
-                    entry.State = EntityState.Modified;
+                    entry.State = EntityState.Deleted;
                 }
 
             }
 
-            await _context.SaveChangesAsync(CancellationToken.None);
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

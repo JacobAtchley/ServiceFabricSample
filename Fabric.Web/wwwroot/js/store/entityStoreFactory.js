@@ -1,5 +1,9 @@
-const hasEntities = function(state){
+const hasEntities = state => {
     return !!(state.entities && state.entities.length > 0);
+};
+
+const getEntityStoreIndex = (state, id) => {
+    return state.entities.findIndex(x => x.id == id);
 };
 
 const updateEntityInStore = function(commit, state, entity){
@@ -7,7 +11,7 @@ const updateEntityInStore = function(commit, state, entity){
         return;
     }
 
-    var storeEntityIndex = state.entities.findIndex(x => x.id == entity.id);
+    var storeEntityIndex = getEntityStoreIndex(state, entity.id);
 
     if(storeEntityIndex >= 0) {
         state.entities[storeEntityIndex] = entity;
@@ -15,6 +19,18 @@ const updateEntityInStore = function(commit, state, entity){
     else{
         state.entities.push(entity);
     }
+
+    commit('setEntities', state.entities);
+};
+
+const removeEntityInStore = function(commit, state, id){
+    if(!hasEntities(state)){
+        return;
+    }
+
+    var storeEntityIndex = getEntityStoreIndex(state, id);
+
+    state.entities.splice(storeEntityIndex);
 
     commit('setEntities', state.entities);
 };
@@ -45,10 +61,12 @@ const storeFactory = function(options) {
                             resolve(entities);
                         })
                         .catch(e => {
+                            console.error(e);
                             reject(e);
                         });
                 });
             },
+            
             getById({state}, id){
                 return new Promise((resolve, reject) => {
                     let entity = null;
@@ -71,10 +89,12 @@ const storeFactory = function(options) {
                             resolve(null);
                         })
                         .catch(e => {
+                            console.error(e);
                             reject(e);
                         });
                 });
             },
+
             addEntity({ commit, state}, entity){
                 return new Promise((resolve, reject) => {
                     axios.post(options.rootUrl, entity)
@@ -83,10 +103,12 @@ const storeFactory = function(options) {
                             resolve(x.data);
                         })
                         .catch(e => {
+                            console.error(e);
                             reject(e);
                         });
                 });
             },
+
             updateEntity({commit, state}, entity){
                 return new Promise((resolve, reject) => {
                     axios.put(`${options.rootUrl}/${entity.id}`, entity)
@@ -95,6 +117,21 @@ const storeFactory = function(options) {
                             resolve(x.data);
                         })
                         .catch(e => {
+                            console.error(e);
+                            reject(e);
+                        });
+                });
+            },
+
+            deleteEntity({commit, state}, id){
+                return new Promise((resolve, reject) => {
+                    axios.delete(`${options.rootUrl}/${id}`)
+                        .then(() => {
+                            removeEntityInStore(commit, state, id);
+                            resolve();
+                        })
+                        .catch(e => {
+                            console.error(e);
                             reject(e);
                         });
                 });

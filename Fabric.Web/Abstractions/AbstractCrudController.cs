@@ -1,6 +1,7 @@
 ﻿using App.Core.Interfaces;
 using App.Core.Interfaces.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fabric.Web.Abstractions
@@ -16,37 +17,37 @@ namespace Fabric.Web.Abstractions
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
             var models = await _crudRepo
-                .GetAllAsync().ConfigureAwait(false);
+                .GetAllAsync(cancellationToken).ConfigureAwait(false);
 
             return Ok(models);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync([FromRoute] string id)
+        public async Task<IActionResult> GetByIdAsync([FromRoute] string id, CancellationToken cancellationToken)
         {
             var model = await _crudRepo
-                .GetByKeyAsync(id.ParseKey<TKey>()).ConfigureAwait(false);
+                .GetByKeyAsync(id.ParseKey<TKey>(), cancellationToken).ConfigureAwait(false);
 
             return Ok(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] TEntity entity)
+        public async Task<IActionResult> PostAsync([FromBody] TEntity entity, CancellationToken cancellationToken)
         {
             var model = await _crudRepo
-                .AddAsync(entity).ConfigureAwait(false);
+                .AddAsync(entity, cancellationToken).ConfigureAwait(false);
 
             return Ok(model);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync([FromRoute] string id, [FromBody] TEntity entity)
+        public async Task<IActionResult> PutAsync([FromRoute] string id, [FromBody] TEntity entity, CancellationToken cancellationToken)
         {
             var model = await _crudRepo
-                .UpdateAsync(id.ParseKey<TKey>(), entity).ConfigureAwait(false);
+                .UpdateAsync(id.ParseKey<TKey>(), entity, cancellationToken).ConfigureAwait(false);
 
             return Ok(model);
         }

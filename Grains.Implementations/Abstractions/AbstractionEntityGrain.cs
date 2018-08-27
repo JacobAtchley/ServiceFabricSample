@@ -3,6 +3,7 @@ using App.Core.Interfaces.Data;
 using Grains.Interfaces;
 using Orleans;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Grains.Implementations.Abstractions
@@ -19,33 +20,33 @@ namespace Grains.Implementations.Abstractions
         }
 
         /// <inheritdoc />
-        public Task<TEntity> GetByKeyAsync(TKey key)
+        public Task<TEntity> GetByKeyAsync(TKey key, CancellationToken cancellationToken)
         {
-            return _crudRepo.GetByKeyAsync(key);
+            return _crudRepo.GetByKeyAsync(key, cancellationToken);
         }
 
         /// <inheritdoc />
-        public Task<IEnumerable<TEntity>> GetAllAsync()
+        public Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return _crudRepo.GetAllAsync();
+            return _crudRepo.GetAllAsync(cancellationToken);
         }
 
         /// <inheritdoc />
-        public Task<TEntity> AddAsync(TEntity entity)
+        public Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            return _crudRepo.AddAsync(entity);
+            return _crudRepo.AddAsync(entity, cancellationToken);
         }
 
         /// <inheritdoc />
-        public Task<TEntity> UpdateAsync(TKey key, TEntity entity)
+        public Task<TEntity> UpdateAsync(TKey key, TEntity entity, CancellationToken cancellationToken)
         {
-            return _crudRepo.UpdateAsync(key, entity);
+            return _crudRepo.UpdateAsync(key, entity, cancellationToken);
         }
 
         /// <inheritdoc />
-        public Task DeleteAsync(TKey key)
+        public Task DeleteAsync(TKey key, CancellationToken cancellationToken)
         {
-            return _crudRepo.DeleteAsync(key);
+            return _crudRepo.DeleteAsync(key, cancellationToken);
         }
     }
 }

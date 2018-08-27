@@ -1,0 +1,50 @@
+<md-progress-spinner
+    v-if="loading"
+    :md-diameter="100"
+    :md-stroke="10"
+    md-mode="indeterminate">
+</md-progress-spinner>
+<div v-else>
+    <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <md-card-header>
+            <div class="md-title">Delete Person</div>
+        </md-card-header>
+
+        <md-card-content>
+            <div v-if="!!person">
+                <p>
+                    Are you sure you want to delete the following person?
+                </p>
+                <p>
+                    First Name: {{person.firstName}}
+                    <br>
+                    Last Name: {{person.lastName}}
+                    <br>
+                    Email: {{person.emailAddress}}
+                    <br>
+                    Date Created: {{person.dateCreatedFormatted}}
+                </p>
+            </div>
+            <div v-else>
+                <p>
+                    This person is not found.
+                </p>
+            </div>
+        </md-card-content>
+
+        <md-card-actions>
+            <md-button
+                class="md-primary md-raised"
+                @click="save"
+                v-if="!!person">
+                Save
+            </md-button>
+            <md-button
+                class="md-primary md-accent"
+                :disabled="submitting"
+                @click="$router.go(-1)">
+                Cancel
+            </md-button>
+        </md-card-actions>
+    </md-card>
+</div>
