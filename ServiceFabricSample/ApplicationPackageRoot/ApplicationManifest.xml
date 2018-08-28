@@ -5,6 +5,7 @@
     <Parameter Name="MyStatelessService_TableStorageConnectionString" DefaultValue="" />
     <Parameter Name="MyStatelessService_DbConnectionString" DefaultValue="" />
     <Parameter Name="MyStatelessService_IsLocal" DefaultValue="" />
+    <Parameter Name="MyStatelessService_RedisConnectionString" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -18,6 +19,7 @@
             <Parameter Name="DbConnectionString" Value="[MyStatelessService_DbConnectionString]" />
             <Parameter Name="TableStorageConnectionString" Value="[MyStatelessService_TableStorageConnectionString]" />
             <Parameter Name="IsLocal" Value="[MyStatelessService_IsLocal]" />
+            <Parameter Name="RedisConnectionString" Value="[MyStatelessService_RedisConnectionString]" />
           </Section>
         </Settings>
       </ConfigOverride>

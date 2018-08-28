@@ -12,8 +12,9 @@ namespace Fabric.Web
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, FabricSettings settings)
         {
+            Settings = settings;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", true, true)
@@ -22,6 +23,8 @@ namespace Fabric.Web
 
             Configuration = builder.Build();
         }
+
+        public FabricSettings Settings { get; }
 
         public IConfigurationRoot Configuration { get; }
 
@@ -32,14 +35,13 @@ namespace Fabric.Web
             services.ConfigureMyAppServices(Configuration);
             services.AddCors();
             services.AddMvc();
-            services.AddSignalR();
+            services.AddSignalR().AddRedis(Settings.RedisConnectionString);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
             IHostingEnvironment env,
-            ILoggerFactory loggerFactory,
-            FabricSettings fabricSettings)
+            ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"))
                          .AddDebug();
@@ -51,7 +53,7 @@ namespace Fabric.Web
                 app.UseBrowserLink();
             }
 
-            app.UseFileServer(GetStaticFileOptions(fabricSettings))
+            app.UseFileServer(GetStaticFileOptions(Settings))
                 .UseCors(policy =>
                 {
                     policy.AllowAnyHeader();

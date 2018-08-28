@@ -20,25 +20,35 @@ namespace Fabric.Core
                     ? db.Value
                     : null;
 
-                TableStorage = MyConfigurationSection.Parameters
-                    .TryGetValue("TableStorageConnectionString", out var table)
-                    ? table.Value
-                    : null;
-
-                IsLocal = MyConfigurationSection.Parameters
-                    .TryGetValue("IsLocal", out var isLocal)
-                    && bool.TryParse(isLocal.Value, out var isLocalBoolean)
-                    && isLocalBoolean;
-
                 if (string.IsNullOrWhiteSpace(Db))
                 {
                     throw new Exception("Could not get db connection string from configuration package");
                 }
 
+                TableStorage = MyConfigurationSection.Parameters
+                    .TryGetValue("TableStorageConnectionString", out var table)
+                    ? table.Value
+                    : null;
+
                 if (string.IsNullOrWhiteSpace(TableStorage))
                 {
                     throw new Exception("Could not get table storage connection string from configuration package");
                 }
+
+                RedisConnectionString = MyConfigurationSection.Parameters
+                    .TryGetValue("RedisConnectionString", out var redis)
+                    ? redis.Value
+                    : null;
+
+                if (string.IsNullOrWhiteSpace(RedisConnectionString))
+                {
+                    throw new Exception("Could not get redis connection string from configuration package");
+                }
+
+                IsLocal = MyConfigurationSection.Parameters
+                    .TryGetValue("IsLocal", out var isLocal)
+                    && bool.TryParse(isLocal.Value, out var isLocalBoolean)
+                    && isLocalBoolean;
             }
             else
             {
@@ -57,6 +67,8 @@ namespace Fabric.Core
         public ConfigurationSettings ConfigurationSettings { get; }
 
         public ConfigurationSection MyConfigurationSection { get; }
+
+        public string RedisConnectionString { get; }
 
     }
 }
