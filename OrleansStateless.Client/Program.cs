@@ -1,4 +1,5 @@
-﻿using Grains.Interfaces;
+﻿using App.Core.Models;
+using Grains.Interfaces;
 using Oreleans.Observers;
 using Orleans.Client;
 using System;
@@ -17,9 +18,14 @@ namespace OrleansStateless.Client
         {
             Console.WriteLine("Starting....");
 
-            var client = OrleansClientFactory.Get(
-                "fabric:/ServiceFabricSample/MyStatelessService",
-                "UseDevelopmentStorage=true");
+            var clientOptions = new OrleansClientConnectionOptions
+            {
+                ClusterId = "development",
+                TableStorageConnectionString = "UseDevelopmentStorage=true",
+                FabricUrl = "fabric:/ServiceFabricSample/MyStatelessService"
+            };
+
+            var client = OrleansClientFactory.Get(clientOptions);
 
             Console.WriteLine("Connecting....");
 
@@ -28,7 +34,7 @@ namespace OrleansStateless.Client
 
             var grain = client.GetGrain<IMyFirstGrain>(Guid.Empty);
 
-            var subscriber = new HelloSubscriber(new ClientHelloObserver());
+            var subscriber = new HelloSubscriber(new ClientHelloObserver(), clientOptions);
 
             await subscriber.InitClientAsync();
 

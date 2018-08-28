@@ -57,5 +57,6 @@ namespace Fabric.Core
         public ConfigurationSettings ConfigurationSettings { get; }
 
         public ConfigurationSection MyConfigurationSection { get; }
+
     }
 }

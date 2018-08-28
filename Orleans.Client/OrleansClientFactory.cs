@@ -1,27 +1,28 @@
-﻿using System;
+﻿using App.Core.Models;
 using Grains.Interfaces;
 using Microsoft.Extensions.Logging;
 using Orleans.Configuration;
 using Orleans.Hosting;
+using System;
 
 namespace Orleans.Client
 {
     public static class OrleansClientFactory
     {
-        public static IClusterClient Get(string fabricUrl, string azureStorageConnectionString)
+        public static IClusterClient Get(OrleansClientConnectionOptions options)
         {
-            var serviceName = new Uri(fabricUrl);
+            var serviceName = new Uri(options.FabricUrl);
 
             var builder = new ClientBuilder();
 
-            builder.Configure<ClusterOptions>(options =>
+            builder.Configure<ClusterOptions>(opt =>
             {
-                options.ServiceId = serviceName.ToString();
-                options.ClusterId = "development";
+                opt.ServiceId = serviceName.ToString();
+                opt.ClusterId = options.ClusterId;
             });
 
-            builder.UseAzureStorageClustering(options =>
-                options.ConnectionString = azureStorageConnectionString);
+            builder.UseAzureStorageClustering(opt =>
+                opt.ConnectionString = options.TableStorageConnectionString);
 
             builder.ConfigureApplicationParts(parts =>
                 parts.AddApplicationPart(typeof(IMyFirstGrain).Assembly));

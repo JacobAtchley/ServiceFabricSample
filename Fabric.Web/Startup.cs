@@ -50,8 +50,7 @@ namespace Fabric.Web
                 app.UseBrowserLink();
             }
 
-            app.UseDefaultFiles()
-               .UseStaticFiles(GetStaticFileOptions(fabricSettings))
+            app.UseFileServer(GetStaticFileOptions(fabricSettings))
                .UseSignalR(routes =>
                {
                    routes.MapHub<OrleansHub>("/hub");
@@ -62,17 +61,18 @@ namespace Fabric.Web
                });
         }
 
-        private static StaticFileOptions GetStaticFileOptions(FabricSettings fabricSettings)
+        private static FileServerOptions GetStaticFileOptions(FabricSettings fabricSettings)
         {
             if (fabricSettings.IsLocal)
             {
-                return new StaticFileOptions();
+                return new FileServerOptions();
             }
 
+            var ass = typeof(Startup).Assembly;
             var manifestEmbeddedProvider =
-                new ManifestEmbeddedFileProvider(typeof(Startup).Assembly);
+                new ManifestEmbeddedFileProvider(ass, "\\wwwroot\\");
 
-            return new StaticFileOptions
+            return new FileServerOptions
             {
                 FileProvider = manifestEmbeddedProvider,
             };

@@ -1,4 +1,5 @@
-﻿using App.Data.Interfaces;
+﻿using App.Core.Models;
+using App.Data.Interfaces;
 using Fabric.Web.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,8 +43,18 @@ namespace Fabric.Web
         private static void ConfigureServices(IServiceCollection services,
             WebClientFactoryOptions options)
         {
-            services.AddScoped(provider => OrleansClientFactory.Get(
-                "fabric:/ServiceFabricSample/MyStatelessService", options.FabricSettings.TableStorage));
+            services.AddScoped(provider =>
+            {
+                var orleanOptions = new OrleansClientConnectionOptions
+                {
+                    TableStorageConnectionString = options.FabricSettings.TableStorage,
+                    ClusterId = options.FabricSettings.IsLocal ? "development" : "production",
+                    FabricUrl = "fabric:/ServiceFabricSample/MyStatelessService"
+                };
+
+                return OrleansClientFactory.Get(orleanOptions);
+
+            });
 
             services.AddSingleton<IAppContextSettings>(new AppContextSettings(options.FabricSettings.Db));
 

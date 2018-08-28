@@ -1,4 +1,5 @@
-﻿using Grains.Interfaces;
+﻿using App.Core.Models;
+using Grains.Interfaces;
 using Orleans.Client;
 using System;
 using System.Threading;
@@ -15,20 +16,20 @@ namespace Oreleans.Observers
     public class HelloSubscriber : IHelloSubscriber
     {
         private readonly IHelloObserver _observer;
+        private readonly OrleansClientConnectionOptions _options;
         private IMyFirstGrain _grain;
         private IHelloObserver _observerReference;
         private CancellationTokenSource _cancellationToken;
 
-        public HelloSubscriber(IHelloObserver observer)
+        public HelloSubscriber(IHelloObserver observer, OrleansClientConnectionOptions options)
         {
             _observer = observer;
+            _options = options;
         }
 
         public async Task InitClientAsync()
         {
-            var client = OrleansClientFactory.Get(
-                "fabric:/ServiceFabricSample/MyStatelessService",
-                "UseDevelopmentStorage=true");
+            var client = OrleansClientFactory.Get(_options);
 
             await client.Connect();
 

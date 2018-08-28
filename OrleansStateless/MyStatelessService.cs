@@ -27,17 +27,19 @@ namespace MyStatelessService
 
             var fabricSettings = new FabricSettings(myConfigPackage);
 
+            var webFactoryOptions = new WebClientFactoryOptions
+            {
+                FabricSettings = fabricSettings,
+                EndpointName = "Web",
+                LogAction = (ctx, log) => ServiceEventSource.Current.ServiceMessage(ctx, log),
+                ContentRoot = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web"
+            };
+
             return new[]
             {
                 OrleansServiceInstanceListenerFactory.Get(fabricSettings),
 
-                WebClientFactory.Get(new WebClientFactoryOptions
-                {
-                    FabricSettings = fabricSettings,
-                    EndpointName = "Web",
-                    LogAction = (ctx, log) => ServiceEventSource.Current.ServiceMessage(ctx, log),
-                    ContentRoot = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web"
-                })
+                WebClientFactory.Get(webFactoryOptions)
             };
         }
 
