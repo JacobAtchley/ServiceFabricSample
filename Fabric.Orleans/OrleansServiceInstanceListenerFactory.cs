@@ -30,7 +30,7 @@ namespace Fabric.Orleans
             builder.Configure<ClusterOptions>(options =>
             {
                 options.ServiceId = context.ServiceName.ToString();
-                options.ClusterId = "development";
+                options.ClusterId = settings.IsLocal ? "development" : "production";
             });
 
 

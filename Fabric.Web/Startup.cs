@@ -30,6 +30,7 @@ namespace Fabric.Web
         {
             // Add framework services.
             services.ConfigureMyAppServices(Configuration);
+            services.AddCors();
             services.AddMvc();
             services.AddSignalR();
         }
@@ -51,6 +52,13 @@ namespace Fabric.Web
             }
 
             app.UseFileServer(GetStaticFileOptions(fabricSettings))
+                .UseCors(policy =>
+                {
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                    policy.AllowAnyOrigin();
+
+                })
                .UseSignalR(routes =>
                {
                    routes.MapHub<OrleansHub>("/hub");
