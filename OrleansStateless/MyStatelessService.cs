@@ -1,4 +1,5 @@
-﻿using Fabric.Orleans;
+﻿using Fabric.Core;
+using Fabric.Orleans;
 using Fabric.Web;
 using Fabric.Web.Models;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
@@ -22,15 +23,20 @@ namespace MyStatelessService
 
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
+            var myConfigPackage = Context.CodePackageActivationContext.GetConfigurationPackageObject("Config");
+
+            var fabricSettings = new FabricSettings(myConfigPackage);
+
             return new[]
             {
-                OrleansServiceInstanceListenerFactory.Get(),
+                OrleansServiceInstanceListenerFactory.Get(fabricSettings),
 
                 WebClientFactory.Get(new WebClientFactoryOptions
                 {
-                    ContentDirectory = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web",
+                    FabricSettings = fabricSettings,
                     EndpointName = "Web",
                     LogAction = (ctx, log) => ServiceEventSource.Current.ServiceMessage(ctx, log),
+                    ContentRoot = (new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.FullName ?? string.Empty) + "\\Fabric.Web"
                 })
             };
         }

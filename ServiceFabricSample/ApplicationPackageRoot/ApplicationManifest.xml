@@ -2,8 +2,9 @@
 <ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ServiceFabricSampleType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
     <Parameter Name="MyStatelessService_InstanceCount" DefaultValue="-1" />
-    <Parameter Name="DbConnectionString" DefaultValue="" />
-    <Parameter Name="TableStorageConnectionString" DefaultValue="" />
+    <Parameter Name="MyStatelessService_TableStorageConnectionString" DefaultValue="" />
+    <Parameter Name="MyStatelessService_DbConnectionString" DefaultValue="" />
+    <Parameter Name="MyStatelessService_IsLocal" DefaultValue="" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -15,7 +16,8 @@
         <Settings>
           <Section Name="MyConfigSection">
             <Parameter Name="DbConnectionString" Value="[MyStatelessService_DbConnectionString]" />
-            <Parameter Name="DbConnectionString" Value="[MyStatelessService_TableStorageConnectionString]" />
+            <Parameter Name="TableStorageConnectionString" Value="[MyStatelessService_TableStorageConnectionString]" />
+            <Parameter Name="IsLocal" Value="[MyStatelessService_IsLocal]" />
           </Section>
         </Settings>
       </ConfigOverride>

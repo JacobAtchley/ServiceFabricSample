@@ -4,5 +4,6 @@
   <Section Name="MyConfigSection">
     <Parameter Name="DbConnectionString" Value="" />
     <Parameter Name="TableStorageConnectionString" Value=""/>
+    <Parameter Name="IsLocal" Value=""/>
   </Section>
 </Settings>

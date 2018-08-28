@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\App.Core\App.Core.csproj" />
     <ProjectReference Include="..\App.Data\App.Data.csproj" />
+    <ProjectReference Include="..\Fabric.Core\Fabric.Core.csproj" />
     <ProjectReference Include="..\Grains.Implementations\Grains.Implementations.csproj" />
     <ProjectReference Include="..\Grains.Interfaces\Grains.Interfaces.csproj" />
   </ItemGroup>

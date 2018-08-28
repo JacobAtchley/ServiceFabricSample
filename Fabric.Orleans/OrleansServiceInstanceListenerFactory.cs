@@ -3,6 +3,7 @@ using App.Core.Models;
 using App.Data;
 using App.Data.Implementations;
 using App.Data.Interfaces;
+using Fabric.Core;
 using Grains.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,18 +14,18 @@ using Orleans.Hosting;
 using Orleans.Hosting.ServiceFabric;
 using System;
 using System.Fabric;
-using System.Fabric.Description;
 
 namespace Fabric.Orleans
 {
     public static class OrleansServiceInstanceListenerFactory
     {
-        public static ServiceInstanceListener Get()
+        public static ServiceInstanceListener Get(FabricSettings settings)
         {
-            return OrleansServiceListener.CreateStateless(Configure);
+            return OrleansServiceListener.CreateStateless(
+                (ctx, builder) => Configure(ctx, builder, settings));
         }
 
-        private static void Configure(ServiceContext context, ISiloHostBuilder builder)
+        private static void Configure(ServiceContext context, ISiloHostBuilder builder, FabricSettings settings)
         {
             builder.Configure<ClusterOptions>(options =>
             {
@@ -35,13 +36,11 @@ namespace Fabric.Orleans
 
             builder.ConfigureLogging(logging => logging.AddDebug());
 
-            var activation = context.CodePackageActivationContext;
-            var settings = activation.GetConfigurationPackageObject("Config").Settings;
-            var myConfig = settings.Sections["MyConfigSection"];
 
             builder.UseAzureStorageClustering(options =>
-                options.ConnectionString = myConfig.Parameters["TableStorageConnectionString"].Value);
+                options.ConnectionString = settings.TableStorage);
 
+            var activation = context.CodePackageActivationContext;
             var endpoints = activation.GetEndpoints();
 
             var siloEndpoint = endpoints["OrleansSiloEndpoint"];
@@ -56,16 +55,13 @@ namespace Fabric.Orleans
                 parts.AddFromApplicationBaseDirectory();
             });
 
-            builder.ConfigureServices((ctx, coll) => ConfigureServices(coll, myConfig));
+            builder.ConfigureServices((ctx, coll) => ConfigureServices(coll, settings));
 
         }
 
-        private static void ConfigureServices(IServiceCollection services, ConfigurationSection settings)
+        private static void ConfigureServices(IServiceCollection services, FabricSettings settings)
         {
-            var db = settings.Parameters["DbConnectionString"].Value;
-
-            services.AddSingleton<IAppContextSettings>(new AppContextSettings(db));
-
+            services.AddSingleton<IAppContextSettings>(new AppContextSettings(settings.Db));
             services.AddScoped<IAppDbContext, AppDbContext>();
             services.AddScoped<ICrudRepo<Guid, Person>, PeopleRepository>();
         }

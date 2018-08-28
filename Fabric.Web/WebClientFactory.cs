@@ -6,7 +6,6 @@ using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Orleans.Client;
 using System.Fabric;
-using System.Fabric.Description;
 using System.Net.Http;
 
 namespace Fabric.Web
@@ -18,38 +17,37 @@ namespace Fabric.Web
             return new ServiceInstanceListener(x => new KestrelCommunicationListener(x, options.EndpointName, (url, listener) =>
             {
 
-                var activation = x.CodePackageActivationContext;
-                var settings = activation.GetConfigurationPackageObject("Config").Settings;
-                var myConfig = settings.Sections["MyConfigSection"];
-
-                options.LogAction(x, $"Starting Kestrel. Earl: {url}. Content Directory: {options.ContentDirectory}");
-
-                return new WebHostBuilder()
+                var builder = new WebHostBuilder()
                     .UseKestrel()
                     .ConfigureServices(services => services.AddSingleton(new HttpClient())
                         .AddSingleton(new FabricClient())
-                        .AddSingleton(x))
-                    .UseContentRoot(options.ContentDirectory)
-                    .ConfigureServices(c => ConfigureServices(c, myConfig))
+                        .AddSingleton(x));
+
+                if (options.FabricSettings.IsLocal)
+                {
+                    builder = builder.UseContentRoot(options.ContentRoot);
+                }
+
+                builder = builder
+                    .ConfigureServices(c => ConfigureServices(c, options))
                     .UseStartup<Startup>()
                     .UseApplicationInsights()
                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
-                    .UseUrls(url)
-                    .Build();
+                    .UseUrls(url);
+
+                return builder.Build();
             }));
         }
 
         private static void ConfigureServices(IServiceCollection services,
-            ConfigurationSection configSection)
+            WebClientFactoryOptions options)
         {
-            var tableStorage = configSection.Parameters["TableStorageConnectionString"].Value;
-            var db = configSection.Parameters["DbConnectionString"].Value;
-
             services.AddScoped(provider => OrleansClientFactory.Get(
-                "fabric:/ServiceFabricSample/MyStatelessService",
-                tableStorage));
+                "fabric:/ServiceFabricSample/MyStatelessService", options.FabricSettings.TableStorage));
 
-            services.AddSingleton<IAppContextSettings>(new AppContextSettings(db));
+            services.AddSingleton<IAppContextSettings>(new AppContextSettings(options.FabricSettings.Db));
+
+            services.AddSingleton(options.FabricSettings);
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using Fabric.Web.Hubs;
+﻿using Fabric.Core;
+using Fabric.Web.Hubs;
 using Fabric.Web.OnStart;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 
 namespace Fabric.Web
@@ -35,7 +37,8 @@ namespace Fabric.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
             IHostingEnvironment env,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            FabricSettings fabricSettings)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"))
                          .AddDebug();
@@ -48,7 +51,7 @@ namespace Fabric.Web
             }
 
             app.UseDefaultFiles()
-               .UseStaticFiles()
+               .UseStaticFiles(GetStaticFileOptions(fabricSettings))
                .UseSignalR(routes =>
                {
                    routes.MapHub<OrleansHub>("/hub");
@@ -57,6 +60,22 @@ namespace Fabric.Web
                {
                    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
                });
+        }
+
+        private static StaticFileOptions GetStaticFileOptions(FabricSettings fabricSettings)
+        {
+            if (fabricSettings.IsLocal)
+            {
+                return new StaticFileOptions();
+            }
+
+            var manifestEmbeddedProvider =
+                new ManifestEmbeddedFileProvider(typeof(Startup).Assembly);
+
+            return new StaticFileOptions
+            {
+                FileProvider = manifestEmbeddedProvider,
+            };
         }
     }
 }
