@@ -7,4 +7,5 @@ A Proof of Concept that explores:
 * Azure Signal R Service
 * Vue.js 
   * Spa
+* Vuex
 * Entity Framework Core
