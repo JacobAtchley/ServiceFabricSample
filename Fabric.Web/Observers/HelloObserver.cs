@@ -1,5 +1,5 @@
 ﻿using Fabric.Web.Hubs;
-using Grains.Interfaces;
+using Grains.Interfaces.Observers;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Fabric.Web.Observers

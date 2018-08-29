@@ -1,6 +1,6 @@
 ﻿using App.Core.Models;
 using Grains.Interfaces;
-using Oreleans.Observers;
+using Oreleans.Observers.Implementations;
 using Orleans.Client;
 using System;
 using System.Threading.Tasks;

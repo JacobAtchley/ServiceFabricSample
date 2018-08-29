@@ -1,3 +1,5 @@
+import {onBus, offBus } from '/js/EventBus/Index.js';
+
 const mapState = Vuex.mapState;
 const mapActions = Vuex.mapActions;
 
@@ -34,9 +36,21 @@ const mixinFactory = function(options) {
                 });
             }
         }),
+        destroyed() {
+            if (options.busName) {
+                offBus(options.busName);
+            }
+        },
         created () {
             if(options.fetchOnCreated){
                 this.getAll();
+            }
+
+            if (options.busName) {
+                onBus(options.busName, (update) => {
+                    debugger;
+                    console.log(update);
+                });
             }
         }
     };

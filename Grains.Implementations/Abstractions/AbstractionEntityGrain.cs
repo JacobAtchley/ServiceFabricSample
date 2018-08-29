@@ -1,7 +1,9 @@
 ﻿using App.Core.Interfaces;
 using App.Core.Interfaces.Data;
 using Grains.Interfaces;
+using Grains.Interfaces.Observers;
 using Orleans;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +14,12 @@ namespace Grains.Implementations.Abstractions
         : Grain, IEntityGrain<TKey, TEntity>
         where TEntity : class, IEntity<TKey>, new()
     {
+
+        private readonly GrainObserverManager<IEntityModifiedObserver<TKey, TEntity>> _observers = new GrainObserverManager<IEntityModifiedObserver<TKey, TEntity>>
+        {
+            ExpirationDuration = TimeSpan.FromSeconds(5)
+        };
+
         private readonly ICrudRepo<TKey, TEntity> _crudRepo;
 
         public AbstractionEntityGrain(ICrudRepo<TKey, TEntity> crudRepo)
@@ -32,21 +40,33 @@ namespace Grains.Implementations.Abstractions
         }
 
         /// <inheritdoc />
-        public Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
+        public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            return _crudRepo.AddAsync(entity, cancellationToken);
+            var result = await _crudRepo.AddAsync(entity, cancellationToken);
+            _observers.Notify(observer => observer.Modified("Added", result));
+            return result;
         }
 
         /// <inheritdoc />
-        public Task<TEntity> UpdateAsync(TKey key, TEntity entity, CancellationToken cancellationToken)
+        public async Task<TEntity> UpdateAsync(TKey key, TEntity entity, CancellationToken cancellationToken)
         {
-            return _crudRepo.UpdateAsync(key, entity, cancellationToken);
+            var result = await _crudRepo.UpdateAsync(key, entity, cancellationToken);
+            _observers.Notify(observer => observer.Modified("Updated", result));
+            return result;
         }
 
         /// <inheritdoc />
-        public Task DeleteAsync(TKey key, CancellationToken cancellationToken)
+        public async Task DeleteAsync(TKey key, CancellationToken cancellationToken)
         {
-            return _crudRepo.DeleteAsync(key, cancellationToken);
+            await _crudRepo.DeleteAsync(key, cancellationToken);
+            _observers.Notify(observer => observer.Modified("Deleted", null));
+        }
+
+        public Task Subscribe(IEntityModifiedObserver<TKey, TEntity> observer)
+        {
+            _observers.Subscribe(observer);
+
+            return Task.CompletedTask;
         }
     }
 }

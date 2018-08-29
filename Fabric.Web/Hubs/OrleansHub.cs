@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Oreleans.Observers;
+using Oreleans.Observers.Interfaces;
 using System;
 using System.Threading.Tasks;
 

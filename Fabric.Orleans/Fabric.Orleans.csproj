@@ -16,7 +16,7 @@
     <PackageReference Include="Microsoft.Orleans.Hosting.ServiceFabric" Version="2.0.4" />
     <PackageReference Include="Microsoft.Orleans.OrleansCodeGenerator.Build" Version="2.0.4" />
     <PackageReference Include="Microsoft.Orleans.Runtime.Legacy" Version="2.0.4" />
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.2.176" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.2.162" />
   </ItemGroup>
 
   <ItemGroup>

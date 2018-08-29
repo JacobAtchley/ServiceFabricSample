@@ -1,4 +1,5 @@
-﻿using Orleans;
+﻿using Grains.Interfaces.Observers;
+using Orleans;
 using System.Threading.Tasks;
 
 namespace Grains.Interfaces
