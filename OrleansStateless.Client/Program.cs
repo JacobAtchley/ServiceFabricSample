@@ -34,7 +34,7 @@ namespace OrleansStateless.Client
 
             var grain = client.GetGrain<IMyFirstGrain>(Guid.Empty);
 
-            var subscriber = new HelloSubscriber(new ClientHelloObserver(), clientOptions);
+            var subscriber = new OrleansSubscriber(new ClientHelloObserver(), clientOptions);
 
             await subscriber.InitClientAsync();
 

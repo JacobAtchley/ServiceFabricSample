@@ -17,7 +17,8 @@ const mixinFactory = function(options) {
             'getById',
             'addEntity',
             'updateEntity',
-            'deleteEntity'
+            'deleteEntity',
+            'initStore'
         ]), {
             mergeEntity(e){
                 return !!e.id ? this.updateEntity(e) : this.addEntity(e);
@@ -36,21 +37,10 @@ const mixinFactory = function(options) {
                 });
             }
         }),
-        destroyed() {
-            if (options.busName) {
-                offBus(options.busName);
-            }
-        },
         created () {
+            this.initStore();
             if(options.fetchOnCreated){
                 this.getAll();
-            }
-
-            if (options.busName) {
-                onBus(options.busName, (update) => {
-                    debugger;
-                    console.log(update);
-                });
             }
         }
     };

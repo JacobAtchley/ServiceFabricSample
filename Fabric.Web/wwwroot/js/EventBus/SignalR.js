@@ -16,6 +16,7 @@ const start = (events) => {
     if(events && events.length > 0){
         events.forEach(e => {
             connection.on(e, message => {
+                console.log('Received Signal R Message', e, message);
                 emitBus(e, message);
             });       
         });

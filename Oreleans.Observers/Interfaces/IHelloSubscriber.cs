@@ -2,7 +2,7 @@
 
 namespace Oreleans.Observers.Interfaces
 {
-    public interface IHelloSubscriber
+    public interface IOrleansSubscriber
     {
         Task InitClientAsync();
 

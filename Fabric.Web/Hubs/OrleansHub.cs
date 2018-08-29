@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Oreleans.Observers.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fabric.Web.Hubs
@@ -9,12 +11,12 @@ namespace Fabric.Web.Hubs
     {
         private static readonly object Key = new object();
 
-        private readonly IHelloSubscriber _subscriber;
+        private readonly IEnumerable<IOrleansSubscriber> _subscribers;
         private static volatile int _clientCount;
 
-        public OrleansHub(IHelloSubscriber subscriber)
+        public OrleansHub(IEnumerable<IOrleansSubscriber> subscriberses)
         {
-            _subscriber = subscriber;
+            _subscribers = subscriberses;
         }
 
         public override async Task OnConnectedAsync()
@@ -29,7 +31,7 @@ namespace Fabric.Web.Hubs
 
             if (initClient)
             {
-                await _subscriber.InitClientAsync();
+                await Task.WhenAll(_subscribers.Select(x => x.InitClientAsync()));
             }
 
             await base.OnConnectedAsync();
@@ -51,7 +53,10 @@ namespace Fabric.Web.Hubs
 
             if (unsubscribe)
             {
-                _subscriber.Unsubscribe();
+                foreach (var subscriber in _subscribers)
+                {
+                    subscriber.Unsubscribe();
+                }
             }
 
             return base.OnDisconnectedAsync(exception);

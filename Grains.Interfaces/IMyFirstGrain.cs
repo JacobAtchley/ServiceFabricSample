@@ -1,13 +1,10 @@
 ﻿using Grains.Interfaces.Observers;
-using Orleans;
 using System.Threading.Tasks;
 
 namespace Grains.Interfaces
 {
-    public interface IMyFirstGrain : IGrainWithGuidKey
+    public interface IMyFirstGrain : ISubscribeGrain<IHelloObserver>
     {
         Task ChatAsync(string message);
-
-        Task Subscribe(IHelloObserver observer);
     }
 }

@@ -20,8 +20,8 @@ namespace Fabric.Web.OnStart
             source.AddSingleton(configuration);
 
             //orleans subscribers
-            source.AddSingleton<IHelloSubscriber, HelloSubscriber>();
-            source.AddSingleton<IEntityModifiedSubscriber, PeopleEntityModifedSubscriber>();
+            source.AddSingleton<IOrleansSubscriber, OrleansSubscriber>();
+            source.AddSingleton<IOrleansSubscriber, PeopleEntityModifedSubscriber>();
 
             //orleans observers
             source.AddScoped<IHelloObserver, HelloObserver>();

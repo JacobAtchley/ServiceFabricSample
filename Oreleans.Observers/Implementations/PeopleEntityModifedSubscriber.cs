@@ -6,7 +6,7 @@ using System;
 
 namespace Oreleans.Observers.Implementations
 {
-    public class PeopleEntityModifedSubscriber : AbstractEntityModifiedSubscriber<Guid, Person, IPeopleGrain>
+    public class PeopleEntityModifedSubscriber : AbstractOrleansSubscriber<IEntityGrain<Guid, Person>, IEntityModifiedObserver<Guid, Person>>
     {
         /// <inheritdoc />
         public PeopleEntityModifedSubscriber(IEntityModifiedObserver<Guid, Person> observer, OrleansClientConnectionOptions options) : base(observer, options) { }
