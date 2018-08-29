@@ -1,5 +1,5 @@
 ﻿using App.Core.Interfaces.Data;
-using App.Core.Models;
+using App.Core.Models.Entities;
 using App.Data;
 using App.Data.Implementations;
 using App.Data.Interfaces;

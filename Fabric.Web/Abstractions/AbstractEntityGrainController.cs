@@ -1,5 +1,5 @@
 ﻿using App.Core.Interfaces;
-using Grains.Interfaces;
+using Grains.Interfaces.Grains;
 using Microsoft.AspNetCore.Mvc;
 using Orleans;
 using System;
@@ -8,6 +8,13 @@ using System.Threading.Tasks;
 
 namespace Fabric.Web.Abstractions
 {
+    /// <summary>
+    /// This controller provides GET, PUT, POST, DELETE
+    //  CRUD actions using an Orleans IClusterClient
+    //  and invoking the entity grain on that client.
+    /// </summary>
+    /// <typeparam name="TKey">The Entity's Key</typeparam>
+    /// <typeparam name="TEntity">The Entity's Type</typeparam>
     public class AbstractEntityGrainController<TKey, TEntity>
         : AbstractGrainClientController<IEntityGrain<TKey, TEntity>>
         where TEntity : class, IEntity<TKey>, new()

@@ -1,7 +1,7 @@
 ﻿using Grains.Interfaces.Observers;
 using System.Threading.Tasks;
 
-namespace Grains.Interfaces
+namespace Grains.Interfaces.Grains
 {
     public interface IMyFirstGrain : ISubscribeGrain<IHelloObserver>
     {

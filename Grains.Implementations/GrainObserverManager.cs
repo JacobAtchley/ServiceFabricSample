@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Orleans.Runtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Orleans.Runtime;
 
 namespace Grains.Implementations
-{/// <summary>
+{
+    /// <summary>
     /// Maintains a collection of grain observers.
     /// </summary>
     /// <typeparam name="T">

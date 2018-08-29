@@ -1,5 +1,5 @@
 ﻿using App.Core.Models;
-using Grains.Interfaces;
+using Grains.Interfaces.Grains;
 using Oreleans.Observers.Implementations;
 using Orleans.Client;
 using System;

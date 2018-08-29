@@ -1,5 +1,5 @@
 ﻿using App.Core.Interfaces.Data;
-using App.Core.Models;
+using App.Core.Models.Entities;
 using Grains.Implementations.Abstractions;
 using System;
 

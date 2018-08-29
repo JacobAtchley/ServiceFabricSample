@@ -14,9 +14,18 @@ namespace Fabric.Web.Hubs
         private readonly IEnumerable<IOrleansSubscriber> _subscribers;
         private static volatile int _clientCount;
 
-        public OrleansHub(IEnumerable<IOrleansSubscriber> subscriberses)
+        /// <summary>
+        /// This class resolves all the IOrleansSubscribers from
+        ///  the IoC container connects them to Signal R only once.
+        ///  The Key object is used to ensure we only register or
+        /// unregister the subscribers once.
+        /// </summary>
+        /// <param name="subscribers">
+        /// The <see cref="IEnumerable{T}"/> of <see cref="IOrleansSubscriber"/>
+        /// subscribers to register</param>
+        public OrleansHub(IEnumerable<IOrleansSubscriber> subscribers)
         {
-            _subscribers = subscriberses;
+            _subscribers = subscribers;
         }
 
         public override async Task OnConnectedAsync()

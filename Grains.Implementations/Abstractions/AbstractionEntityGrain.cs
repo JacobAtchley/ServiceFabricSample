@@ -1,6 +1,6 @@
 ﻿using App.Core.Interfaces;
 using App.Core.Interfaces.Data;
-using Grains.Interfaces;
+using Grains.Interfaces.Grains;
 using Grains.Interfaces.Observers;
 using Orleans;
 using System;
@@ -10,6 +10,13 @@ using System.Threading.Tasks;
 
 namespace Grains.Implementations.Abstractions
 {
+    /// <summary>
+    /// This class provides scaffolding for CRUD'ing an entity
+    /// and notifying any Orlean Grain observers
+    /// that the entity has changed.
+    /// </summary>
+    /// <typeparam name="TKey">The Entity's Key</typeparam>
+    /// <typeparam name="TEntity">The Entity's Type</typeparam>
     public class AbstractionEntityGrain<TKey, TEntity>
         : Grain, IEntityGrain<TKey, TEntity>
         where TEntity : class, IEntity<TKey>, new()

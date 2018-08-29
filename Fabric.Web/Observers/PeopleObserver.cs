@@ -1,4 +1,4 @@
-﻿using App.Core.Models;
+﻿using App.Core.Models.Entities;
 using Fabric.Web.Hubs;
 using Fabric.Web.Observers.Abstractions;
 using Microsoft.AspNetCore.SignalR;

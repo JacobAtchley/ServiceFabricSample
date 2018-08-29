@@ -1,6 +1,6 @@
 ﻿using Fabric.Web.Abstractions;
 using Fabric.Web.Models;
-using Grains.Interfaces;
+using Grains.Interfaces.Grains;
 using Microsoft.AspNetCore.Mvc;
 using Orleans;
 using System;

@@ -1,5 +1,5 @@
 ﻿using App.Core.Models;
-using Grains.Interfaces;
+using Grains.Interfaces.Grains;
 using Microsoft.Extensions.Logging;
 using Orleans.Configuration;
 using Orleans.Hosting;

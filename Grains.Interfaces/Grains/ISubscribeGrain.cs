@@ -1,7 +1,7 @@
 ﻿using Orleans;
 using System.Threading.Tasks;
 
-namespace Grains.Interfaces
+namespace Grains.Interfaces.Grains
 {
     public interface ISubscribeGrain<in TObserver> : IGrainWithGuidKey
     {

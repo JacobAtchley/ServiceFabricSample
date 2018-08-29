@@ -1,4 +1,4 @@
-﻿using Grains.Interfaces;
+﻿using Grains.Interfaces.Grains;
 using Grains.Interfaces.Observers;
 using Orleans;
 using System;

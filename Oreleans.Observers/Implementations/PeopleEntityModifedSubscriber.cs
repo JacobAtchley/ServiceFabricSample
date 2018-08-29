@@ -1,5 +1,6 @@
 ﻿using App.Core.Models;
-using Grains.Interfaces;
+using App.Core.Models.Entities;
+using Grains.Interfaces.Grains;
 using Grains.Interfaces.Observers;
 using Oreleans.Observers.Abstractions;
 using System;

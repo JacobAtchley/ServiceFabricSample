@@ -1,5 +1,5 @@
 ﻿using App.Core.Models;
-using Grains.Interfaces;
+using Grains.Interfaces.Grains;
 using Oreleans.Observers.Interfaces;
 using Orleans;
 using Orleans.Client;
@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace Oreleans.Observers.Abstractions
 {
+    /// <summary>
+    /// Scaffolds the process for subscribing to a grain.
+    /// </summary>
+    /// <typeparam name="TGrain">The type of grain to observe</typeparam>
+    /// <typeparam name="TObServer">Tye grain observer type</typeparam>
     public class AbstractOrleansSubscriber<TGrain, TObServer>
         : IOrleansSubscriber
         where TGrain : ISubscribeGrain<TObServer>
