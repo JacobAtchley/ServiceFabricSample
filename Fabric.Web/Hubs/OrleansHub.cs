@@ -7,9 +7,10 @@ namespace Fabric.Web.Hubs
 {
     public class OrleansHub : Hub
     {
+        private static readonly object Key = new object();
+
         private readonly IHelloSubscriber _subscriber;
-        private static volatile int _clientCount = 0;
-        private static readonly object _key = new object();
+        private static volatile int _clientCount;
 
         public OrleansHub(IHelloSubscriber subscriber)
         {
@@ -18,8 +19,9 @@ namespace Fabric.Web.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            var initClient = false;
-            lock (_key)
+            bool initClient;
+
+            lock (Key)
             {
                 _clientCount++;
                 initClient = _clientCount == 1;
@@ -36,11 +38,15 @@ namespace Fabric.Web.Hubs
         public override Task OnDisconnectedAsync(Exception exception)
         {
             var unsubscribe = false;
-            lock (_key)
+
+            lock (Key)
             {
                 _clientCount--;
+
                 if (_clientCount < 1)
+                {
                     unsubscribe = true;
+                }
             }
 
             if (unsubscribe)

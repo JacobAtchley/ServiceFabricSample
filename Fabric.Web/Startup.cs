@@ -33,9 +33,15 @@ namespace Fabric.Web
         {
             // Add framework services.
             services.ConfigureMyAppServices(Configuration);
-            services.AddCors();
             services.AddMvc();
-            services.AddSignalR().AddRedis(Settings.RedisConnectionString);
+            services.AddSignalR(o =>
+                {
+                    o.EnableDetailedErrors = true;
+                })
+                .AddAzureSignalR(x =>
+                {
+                    x.ConnectionString = Settings.SignalRConnectionString;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,14 +60,7 @@ namespace Fabric.Web
             }
 
             app.UseFileServer(GetStaticFileOptions(Settings))
-                .UseCors(policy =>
-                {
-                    policy.AllowAnyHeader();
-                    policy.AllowAnyMethod();
-                    policy.AllowAnyOrigin();
-
-                })
-               .UseSignalR(routes =>
+               .UseAzureSignalR(routes =>
                {
                    routes.MapHub<OrleansHub>("/hub");
                })

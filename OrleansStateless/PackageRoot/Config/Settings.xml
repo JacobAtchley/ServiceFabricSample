@@ -5,6 +5,6 @@
     <Parameter Name="DbConnectionString" Value="" />
     <Parameter Name="TableStorageConnectionString" Value=""/>
     <Parameter Name="IsLocal" Value=""/>
-    <Parameter Name="RedisConnectionString" Value=""/>
+    <Parameter Name="SignalRConnectionString" Value=""/>
   </Section>
 </Settings>

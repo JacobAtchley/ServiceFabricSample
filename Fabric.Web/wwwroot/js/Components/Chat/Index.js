@@ -1,4 +1,5 @@
 ﻿import factory from '/js/Utils/ComponentFactory.js';
+import { onBus, offBus } from '/js/EventBus/Index.js';
 
 export default factory({
     name: 'chat',
@@ -20,18 +21,13 @@ export default factory({
                     .then(() => this.message = '');
             }
         },
-        mounted: function () {
-            var connection = new signalR.HubConnectionBuilder().withUrl('/hub').build();
-
-            connection.on("Hello", message => {
+        mounted () {
+            onBus('Hello', message => {
                 this.calls.push(message);
             });
-
-            connection
-                .start()
-                .catch(err => {
-                    console.error(err.toString());
-                });
+        },
+        destroyed() {
+            offBus('Hello');
         }
     }
-})
+});

@@ -3,7 +3,7 @@ const hasEntities = state => {
 };
 
 const getEntityStoreIndex = (state, id) => {
-    return state.entities.findIndex(x => x.id == id);
+    return state.entities.findIndex(x => x.id === id);
 };
 
 const updateEntityInStore = function(commit, state, entity){

@@ -43,22 +43,22 @@ namespace Fabric.Web
         private static void ConfigureServices(IServiceCollection services,
             WebClientFactoryOptions options)
         {
-            services.AddScoped(provider =>
+
+            var orleanOptions = new OrleansClientConnectionOptions
             {
-                var orleanOptions = new OrleansClientConnectionOptions
-                {
-                    TableStorageConnectionString = options.FabricSettings.TableStorage,
-                    ClusterId = options.FabricSettings.IsLocal ? "development" : "production",
-                    FabricUrl = "fabric:/ServiceFabricSample/MyStatelessService"
-                };
+                TableStorageConnectionString = options.FabricSettings.TableStorage,
+                ClusterId = options.FabricSettings.IsLocal ? "development" : "production",
+                FabricUrl = "fabric:/ServiceFabricSample/MyStatelessService"
+            };
 
-                return OrleansClientFactory.Get(orleanOptions);
+            IAppContextSettings contextSettings =
+                new AppContextSettings(options.FabricSettings.Db);
 
-            });
+            services.AddScoped(provider => OrleansClientFactory.Get(orleanOptions));
 
-            services.AddSingleton<IAppContextSettings>(new AppContextSettings(options.FabricSettings.Db));
-
+            services.AddSingleton(contextSettings);
             services.AddSingleton(options.FabricSettings);
+            services.AddSingleton(orleanOptions);
         }
     }
 }

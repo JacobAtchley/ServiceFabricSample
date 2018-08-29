@@ -15,40 +15,28 @@ namespace Fabric.Core
             {
                 MyConfigurationSection = configSection;
 
-                Db = MyConfigurationSection.Parameters
-                    .TryGetValue("DbConnectionString", out var db)
-                    ? db.Value
-                    : null;
+                Db = GetSettingString("DbConnectionString");
 
                 if (string.IsNullOrWhiteSpace(Db))
                 {
                     throw new Exception("Could not get db connection string from configuration package");
                 }
 
-                TableStorage = MyConfigurationSection.Parameters
-                    .TryGetValue("TableStorageConnectionString", out var table)
-                    ? table.Value
-                    : null;
+                TableStorage = GetSettingString("TableStorageConnectionString");
 
                 if (string.IsNullOrWhiteSpace(TableStorage))
                 {
                     throw new Exception("Could not get table storage connection string from configuration package");
                 }
 
-                RedisConnectionString = MyConfigurationSection.Parameters
-                    .TryGetValue("RedisConnectionString", out var redis)
-                    ? redis.Value
-                    : null;
+                SignalRConnectionString = GetSettingString("SignalRConnectionString");
 
-                if (string.IsNullOrWhiteSpace(RedisConnectionString))
+                if (string.IsNullOrWhiteSpace(SignalRConnectionString))
                 {
-                    throw new Exception("Could not get redis connection string from configuration package");
+                    throw new Exception("Could not get signal r connection string from configuration package");
                 }
 
-                IsLocal = MyConfigurationSection.Parameters
-                    .TryGetValue("IsLocal", out var isLocal)
-                    && bool.TryParse(isLocal.Value, out var isLocalBoolean)
-                    && isLocalBoolean;
+                IsLocal = bool.TryParse(GetSettingString("IsLocal"), out var isLocalBoolean) && isLocalBoolean;
             }
             else
             {
@@ -68,7 +56,14 @@ namespace Fabric.Core
 
         public ConfigurationSection MyConfigurationSection { get; }
 
-        public string RedisConnectionString { get; }
+        public string SignalRConnectionString { get; }
 
+        private string GetSettingString(string name)
+        {
+            return MyConfigurationSection.Parameters
+                .TryGetValue(name, out var settingValue)
+                ? settingValue.Value
+                : null;
+        }
     }
 }

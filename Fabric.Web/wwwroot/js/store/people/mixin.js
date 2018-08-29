@@ -1,4 +1,4 @@
-import factory from '/js/store/entityStoreMixinFactory.js';
+import factory from '/js/Store/EntityStoreMixinFactory.js';
 
 export default factory({
     module: 'people',
