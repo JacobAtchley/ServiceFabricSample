@@ -41,9 +41,7 @@ namespace Fabric.Orleans
                 options.ClusterId = settings.IsLocal ? "development" : "production";
             });
 
-
             builder.ConfigureLogging(logging => logging.AddDebug());
-
 
             builder.UseAzureStorageClustering(options =>
                 options.ConnectionString = settings.TableStorage);
@@ -59,6 +57,13 @@ namespace Fabric.Orleans
             var siloEndpoint = endpoints["OrleansSiloEndpoint"];
             var gatewayEndpoint = endpoints["OrleansProxyEndpoint"];
             var hostname = context.NodeContext.IPAddressOrFQDN;
+
+
+
+            builder.UseDashboard(options =>
+            {
+                options.Port = endpoints["OrleansDashboard"].Port;
+            });
 
             builder.ConfigureEndpoints(hostname, siloEndpoint.Port, gatewayEndpoint.Port);
 

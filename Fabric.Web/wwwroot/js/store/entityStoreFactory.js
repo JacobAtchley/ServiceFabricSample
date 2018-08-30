@@ -16,7 +16,8 @@ const updateEntityInStore = function(commit, state, entity){
     var storeEntityIndex = getEntityStoreIndex(state, entity.id);
 
     if(storeEntityIndex >= 0) {
-        state.entities[storeEntityIndex] = entity;
+        //use splice so vue can update the vue. setting the index will not make the DOM reactive.
+        state.entities.splice(storeEntityIndex, 1, entity);
     }
     else{
         state.entities.push(entity);
