@@ -11,6 +11,11 @@ namespace Fabric.Core
             Package = package;
             ConfigurationSettings = Package.Settings;
 
+            //**************************************************************
+            //* Author : Jacob Atchley
+            //* Date   : 08:29:2018 04:01 PM
+            //* Comment: Bound to ServiceFabricSample/ApplicationPackageRoot/ApplicationManifest.xml
+            //**************************************************************
             if (ConfigurationSettings.Sections.TryGetValue("MyConfigSection", out var configSection))
             {
                 MyConfigurationSection = configSection;

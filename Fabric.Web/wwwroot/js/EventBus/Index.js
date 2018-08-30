@@ -1,6 +1,7 @@
 const EventBus = new Vue();
 
 const onBus = (eventName, callback) => {
+    EventBus.$off(eventName, callback);
     EventBus.$on(eventName, callback);
 };
 

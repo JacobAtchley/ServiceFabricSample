@@ -1,27 +1,31 @@
 ﻿using App.Core.Models;
-using Grains.Interfaces;
+using Grains.Interfaces.Grains;
+using Oreleans.Observers.Interfaces;
+using Orleans;
 using Orleans.Client;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Oreleans.Observers
+namespace Oreleans.Observers.Abstractions
 {
-    public interface IHelloSubscriber
+    /// <summary>
+    /// Scaffolds the process for subscribing to a grain.
+    /// </summary>
+    /// <typeparam name="TGrain">The type of grain to observe</typeparam>
+    /// <typeparam name="TObServer">Tye grain observer type</typeparam>
+    public class AbstractOrleansSubscriber<TGrain, TObServer>
+        : IOrleansSubscriber
+        where TGrain : ISubscribeGrain<TObServer>
+        where TObServer : IGrainObserver
     {
-        Task InitClientAsync();
-        void Unsubscribe();
-    }
-
-    public class HelloSubscriber : IHelloSubscriber
-    {
-        private readonly IHelloObserver _observer;
+        private readonly TObServer _observer;
         private readonly OrleansClientConnectionOptions _options;
-        private IMyFirstGrain _grain;
-        private IHelloObserver _observerReference;
+        private TGrain _grain;
+        private TObServer _observerReference;
         private CancellationTokenSource _cancellationToken;
 
-        public HelloSubscriber(IHelloObserver observer, OrleansClientConnectionOptions options)
+        public AbstractOrleansSubscriber(TObServer observer, OrleansClientConnectionOptions options)
         {
             _observer = observer;
             _options = options;
@@ -33,12 +37,11 @@ namespace Oreleans.Observers
 
             await client.Connect();
 
-            Console.WriteLine("Connected");
+            _grain = client.GetGrain<TGrain>(Guid.Empty);
 
-            _grain = client.GetGrain<IMyFirstGrain>(Guid.Empty);
-
-            _observerReference = await client.CreateObjectReference<IHelloObserver>(_observer);
+            _observerReference = await client.CreateObjectReference<TObServer>(_observer);
             _cancellationToken = new CancellationTokenSource();
+
             StaySubscribed(_cancellationToken.Token);
         }
 

@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace Fabric.Web.Abstractions
 {
+    /// <summary>
+    /// This is an controller that provides scaffolding for
+    ///  interacting wtiha an orleans grain via a cluster client
+    /// </summary>
+    /// <typeparam name="TGrain">The type of grain to interact with</typeparam>
     public class AbstractGrainClientController<TGrain> : Controller
         where TGrain : IGrainWithGuidKey
     {

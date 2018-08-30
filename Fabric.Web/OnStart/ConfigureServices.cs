@@ -1,13 +1,14 @@
 ﻿using App.Core.Interfaces.Data;
-using App.Core.Models;
+using App.Core.Models.Entities;
 using App.Data;
 using App.Data.Implementations;
 using App.Data.Interfaces;
 using Fabric.Web.Observers;
-using Grains.Interfaces;
+using Grains.Interfaces.Observers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Oreleans.Observers;
+using Oreleans.Observers.Implementations;
+using Oreleans.Observers.Interfaces;
 using System;
 
 namespace Fabric.Web.OnStart
@@ -17,8 +18,16 @@ namespace Fabric.Web.OnStart
         public static IServiceCollection ConfigureMyAppServices(this IServiceCollection source, IConfiguration configuration)
         {
             source.AddSingleton(configuration);
-            source.AddSingleton<IHelloSubscriber, HelloSubscriber>();
+
+            //orleans subscribers
+            source.AddSingleton<IOrleansSubscriber, OrleansSubscriber>();
+            source.AddSingleton<IOrleansSubscriber, PeopleEntityModifedSubscriber>();
+
+            //orleans observers
             source.AddScoped<IHelloObserver, HelloObserver>();
+            source.AddScoped<IEntityModifiedObserver<Guid, Person>, PeopleObserver>();
+
+            //data access
             source.AddScoped<IAppDbContext, AppDbContext>();
             source.AddScoped<ICrudRepo<Guid, Person>, PeopleRepository>();
 

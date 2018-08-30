@@ -1,3 +1,5 @@
+import {onBus, offBus } from '/js/EventBus/Index.js';
+
 const mapState = Vuex.mapState;
 const mapActions = Vuex.mapActions;
 
@@ -15,7 +17,8 @@ const mixinFactory = function(options) {
             'getById',
             'addEntity',
             'updateEntity',
-            'deleteEntity'
+            'deleteEntity',
+            'initStore'
         ]), {
             mergeEntity(e){
                 return !!e.id ? this.updateEntity(e) : this.addEntity(e);
@@ -35,6 +38,7 @@ const mixinFactory = function(options) {
             }
         }),
         created () {
+            this.initStore();
             if(options.fetchOnCreated){
                 this.getAll();
             }

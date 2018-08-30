@@ -1,4 +1,4 @@
-﻿using App.Core.Models;
+﻿using App.Core.Models.Entities;
 using App.Data.Abstractions;
 using App.Data.Interfaces;
 using System;

@@ -1,6 +1,6 @@
 ﻿using App.Core.Models;
-using Grains.Interfaces;
-using Oreleans.Observers;
+using Grains.Interfaces.Grains;
+using Oreleans.Observers.Implementations;
 using Orleans.Client;
 using System;
 using System.Threading.Tasks;
@@ -34,7 +34,7 @@ namespace OrleansStateless.Client
 
             var grain = client.GetGrain<IMyFirstGrain>(Guid.Empty);
 
-            var subscriber = new HelloSubscriber(new ClientHelloObserver(), clientOptions);
+            var subscriber = new OrleansSubscriber(new ClientHelloObserver(), clientOptions);
 
             await subscriber.InitClientAsync();
 

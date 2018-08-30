@@ -17,4 +17,4 @@ const app = new Vue(myApp);
 
 app.$mount('#app');
 
-start(['Hello']);
+start(['Hello', 'EntityModified;Person']);

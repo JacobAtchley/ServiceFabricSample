@@ -1,3 +1,5 @@
+import { onBus } from '/js/EventBus/Index.js';
+
 const hasEntities = state => {
     return !!(state.entities && state.entities.length > 0);
 };
@@ -14,7 +16,8 @@ const updateEntityInStore = function(commit, state, entity){
     var storeEntityIndex = getEntityStoreIndex(state, entity.id);
 
     if(storeEntityIndex >= 0) {
-        state.entities[storeEntityIndex] = entity;
+        //use splice so vue can update the vue. setting the index will not make the DOM reactive.
+        state.entities.splice(storeEntityIndex, 1, entity);
     }
     else{
         state.entities.push(entity);
@@ -36,6 +39,7 @@ const removeEntityInStore = function(commit, state, id){
 };
 
 const storeFactory = function(options) {
+    
     return {
         namespaced: true,
 
@@ -47,6 +51,21 @@ const storeFactory = function(options) {
         },
 
         actions : {
+            initStore({commit, state}){
+                if (options.busName) {
+                    onBus(options.busName, (update) => {
+                        switch(update.reason || ''){
+                            case 'Added':
+                            case 'Updated':
+                                updateEntityInStore(commit, state, update.entity);
+                                break;
+                            case 'Deleted':
+                                removeEntityInStore(commit, state, update.entity.id);
+                                break;
+                        }
+                    });
+                }
+            },
             getAll({ commit, state }){
                 return new Promise((resolve, reject) => {
                     if(hasEntities(state)){

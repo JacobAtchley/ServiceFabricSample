@@ -1,4 +1,4 @@
-﻿using App.Core.Models;
+﻿using App.Core.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Data.Interfaces

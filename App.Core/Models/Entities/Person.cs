@@ -1,8 +1,9 @@
 ﻿using App.Core.Interfaces;
 using System;
 
-namespace App.Core.Models
+namespace App.Core.Models.Entities
 {
+    [Serializable]
     public class Person : IEntity<Guid>
     {
         public Guid Id { get; set; }

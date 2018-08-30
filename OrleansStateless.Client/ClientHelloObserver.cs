@@ -1,4 +1,4 @@
-﻿using Grains.Interfaces;
+﻿using Grains.Interfaces.Observers;
 using System;
 
 namespace OrleansStateless.Client
